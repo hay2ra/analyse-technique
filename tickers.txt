@@ -6,7 +6,7 @@
 [PEA]
 WPEA.PA     # iShares MSCI World Swap PEA
 PAEEM.PA    # Amundi PEA MSCI Emerging Markets
-ETZ.PA      # BNP Paribas Easy Stoxx Europe 600 (à vérifier)
+ETZ.PA      # BNP Paribas Easy Stoxx Europe 600
 AL2SI.PA    # 2CRSi
 ISP.MI      # Intesa Sanpaolo
 AIR.PA      # Airbus
@@ -30,20 +30,20 @@ GTT.PA      # GTT
 ENR.DE      # Siemens Energy
 
 [CTO]
-PPFB.DE     # iShares Physical Gold ETC (à vérifier)
+PPFB.DE     # iShares Physical Gold ETC
 AMZN        # Amazon
 META        # Meta Platforms
 GOOGL       # Alphabet A
 NVDA        # NVIDIA
-DFEN.DE     # VanEck Defense UCITS ETF (à vérifier)
+DFEN.DE     # VanEck Defense UCITS ETF
 MSFT        # Microsoft
 V           # Visa
 AVGO        # Broadcom
 BRK-B       # Berkshire Hathaway B
-QUTM.DE     # VanEck Quantum Computing UCITS ETF (à vérifier)
+QUTM.DE     # VanEck Quantum Computing UCITS ETF
 NFLX        # Netflix
 1211.HK     # BYD
-JEDI.DE     # VanEck Space Innovators UCITS ETF (à vérifier)
+JEDI.DE     # VanEck Space Innovators UCITS ETF
 1810.HK     # Xiaomi
 BAYN.DE     # Bayer
 
