@@ -1,6 +1,6 @@
 {
- "genere_le": "2026-10-09T11:11:35+02:00",
- "nb_ok": 49,
+ "genere_le": "2026-10-09T11:14:29+02:00",
+ "nb_ok": 51,
  "nb_echecs": 0,
  "echecs": [],
  "derniere_seance_par_ticker": {
@@ -50,12 +50,15 @@
   "^IXIC": "2026-10-08",
   "^HSI": "2026-10-09",
   "EURUSD=X": "2026-10-09",
+  "EURHKD=X": "2026-10-09",
+  "^TNX": "2026-10-08",
   "GC=F": "2026-10-09",
   "BZ=F": "2026-10-09",
   "BTC-EUR": "2026-10-09"
  },
  "signaux_achat": [
   "AI.PA",
+  "ENR.DE",
   "PPFB.DE",
   "V",
   "BRK-B"
