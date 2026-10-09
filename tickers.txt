@@ -56,6 +56,8 @@ FTSEMIB.MI  # FTSE MIB
 ^IXIC       # Nasdaq Composite
 ^HSI        # Hang Seng
 EURUSD=X    # Euro / Dollar
+EURHKD=X    # Euro / Dollar de Hong Kong
+^TNX        # Taux US 10 ans (en %)
 GC=F        # Or (future)
 BZ=F        # Brent (future)
 BTC-EUR     # Bitcoin en euros
