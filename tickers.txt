@@ -29,6 +29,7 @@ SAF.PA      # Safran
 GTT.PA      # GTT
 ENR.DE      # Siemens Energy
 
+
 [CTO]
 PPFB.DE     # iShares Physical Gold ETC
 AMZN        # Amazon
@@ -46,6 +47,9 @@ NFLX        # Netflix
 JEDI.DE     # VanEck Space Innovators UCITS ETF
 1810.HK     # Xiaomi
 BAYN.DE     # Bayer
+
+[SWING]
+IREN        # Iren
 
 [INDICES]
 ^FCHI       # CAC 40
