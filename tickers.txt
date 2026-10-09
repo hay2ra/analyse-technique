@@ -1,0 +1,61 @@
+# Liste des titres analysés chaque soir.
+# Une ligne par ticker Yahoo Finance, suivi d'un libellé facultatif après #.
+# Suffixes : .PA Paris, .MI Milan, .DE Xetra, .HK Hong Kong, rien pour les US.
+# Pour ajouter ou retirer un titre : modifiez ce fichier directement sur GitHub.
+
+[PEA]
+WPEA.PA     # iShares MSCI World Swap PEA
+PAEEM.PA    # Amundi PEA MSCI Emerging Markets
+ETZ.PA      # BNP Paribas Easy Stoxx Europe 600 (à vérifier)
+AL2SI.PA    # 2CRSi
+ISP.MI      # Intesa Sanpaolo
+AIR.PA      # Airbus
+STMPA.PA    # STMicroelectronics
+FDE.PA      # La Française de l'Énergie
+TE.PA       # Technip Energies
+CS.PA       # AXA
+NWL.MI      # NewPrinces
+AI.PA       # Air Liquide
+ALCPB.PA    # Capital B
+WBD.MI      # Webuild
+
+[WATCHLIST]
+SU.PA       # Schneider Electric
+FGR.PA      # Eiffage
+ALMDT.PA    # Median Technologies
+BNP.PA      # BNP Paribas
+UCG.MI      # UniCredit
+SAF.PA      # Safran
+GTT.PA      # GTT
+ENR.DE      # Siemens Energy
+
+[CTO]
+PPFB.DE     # iShares Physical Gold ETC (à vérifier)
+AMZN        # Amazon
+META        # Meta Platforms
+GOOGL       # Alphabet A
+NVDA        # NVIDIA
+DFEN.DE     # VanEck Defense UCITS ETF (à vérifier)
+MSFT        # Microsoft
+V           # Visa
+AVGO        # Broadcom
+BRK-B       # Berkshire Hathaway B
+QUTM.DE     # VanEck Quantum Computing UCITS ETF (à vérifier)
+NFLX        # Netflix
+1211.HK     # BYD
+JEDI.DE     # VanEck Space Innovators UCITS ETF (à vérifier)
+1810.HK     # Xiaomi
+BAYN.DE     # Bayer
+
+[INDICES]
+^FCHI       # CAC 40
+FTSEMIB.MI  # FTSE MIB
+^STOXX      # STOXX Europe 600
+^GDAXI      # DAX
+^GSPC       # S&P 500
+^IXIC       # Nasdaq Composite
+^HSI        # Hang Seng
+EURUSD=X    # Euro / Dollar
+GC=F        # Or (future)
+BZ=F        # Brent (future)
+BTC-EUR     # Bitcoin en euros

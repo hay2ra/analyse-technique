@@ -1,0 +1,66 @@
+name: Analyse technique quotidienne
+
+# GitHub planifie en heure UTC, sans changement d'heure.
+# Deux créneaux par marché couvrent l'heure d'été et l'heure d'hiver ;
+# l'étape « Vérifier l'horaire » ne garde que ceux qui tombent après la clôture.
+on:
+  schedule:
+    - cron: "50 15 * * 1-5"   # 17h50 Paris en été  / 16h50 en hiver (ignoré)
+    - cron: "50 16 * * 1-5"   # 18h50 Paris en été  / 17h50 en hiver
+    - cron: "20 20 * * 1-5"   # 22h20 Paris en été  / 21h20 en hiver (ignoré)
+    - cron: "20 21 * * 1-5"   # 23h20 Paris en été  / 22h20 en hiver
+  workflow_dispatch:          # bouton « Run workflow » pour lancer à la main
+
+permissions:
+  contents: write
+
+concurrency:
+  group: analyse
+  cancel-in-progress: false
+
+jobs:
+  analyse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Vérifier l'horaire (heure de Paris)
+        id: horaire
+        run: |
+          H=$(TZ=Europe/Paris date +%H%M)
+          echo "Heure de Paris : $H"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] \
+             || { [ "$H" -ge 1740 ] && [ "$H" -le 2030 ]; } \
+             || [ "$H" -ge 2205 ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Créneau avant clôture : exécution ignorée."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.horaire.outputs.ok == 'true'
+
+      - uses: actions/setup-python@v5
+        if: steps.horaire.outputs.ok == 'true'
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Installer les librairies
+        if: steps.horaire.outputs.ok == 'true'
+        run: pip install -r requirements.txt
+
+      - name: Lancer l'analyse
+        if: steps.horaire.outputs.ok == 'true'
+        run: python analyse_technique.py --fichier tickers.txt --sortie data
+
+      - name: Enregistrer les résultats
+        if: steps.horaire.outputs.ok == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898293+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet && exit 0
+          git commit -m "Données du $(TZ=Europe/Paris date '+%d/%m/%Y %H:%M')"
+          git pull --rebase
+          git push
