@@ -42,6 +42,7 @@ V           # Visa
 AVGO        # Broadcom
 BRK-B       # Berkshire Hathaway B
 QUTM.DE     # VanEck Quantum Computing UCITS ETF
+IONQ        # IonQ (non détenu, candidat satellite quantique)
 NFLX        # Netflix
 1211.HK     # BYD
 JEDI.DE     # VanEck Space Innovators UCITS ETF
