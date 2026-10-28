@@ -58,6 +58,88 @@ WMT         # Walmart
 SPY         # SPDR S&P 500 ETF (contexte de marché swing)
 QQQ         # Invesco QQQ Nasdaq 100 (contexte de marché swing)
 
+[SCAN]
+BAC         # scan swing temporaire
+WFC         # scan swing temporaire
+C           # scan swing temporaire
+SCHW        # scan swing temporaire
+SOFI        # scan swing temporaire
+HOOD        # scan swing temporaire
+KEY         # scan swing temporaire
+RF          # scan swing temporaire
+USB         # scan swing temporaire
+ALLY        # scan swing temporaire
+NU          # scan swing temporaire
+CSX         # scan swing temporaire
+UBER        # scan swing temporaire
+DAL         # scan swing temporaire
+UAL         # scan swing temporaire
+AAL         # scan swing temporaire
+CCL         # scan swing temporaire
+NCLH        # scan swing temporaire
+KO          # scan swing temporaire
+MDLZ        # scan swing temporaire
+KHC         # scan swing temporaire
+KDP         # scan swing temporaire
+GIS         # scan swing temporaire
+NKE         # scan swing temporaire
+SBUX        # scan swing temporaire
+CMG         # scan swing temporaire
+DG          # scan swing temporaire
+DLTR        # scan swing temporaire
+F           # scan swing temporaire
+GM          # scan swing temporaire
+RIVN        # scan swing temporaire
+PFE         # scan swing temporaire
+MRK         # scan swing temporaire
+BMY         # scan swing temporaire
+ABT         # scan swing temporaire
+BSX         # scan swing temporaire
+CVS         # scan swing temporaire
+HIMS        # scan swing temporaire
+GILD        # scan swing temporaire
+INTC        # scan swing temporaire
+SMCI        # scan swing temporaire
+SNAP        # scan swing temporaire
+PINS        # scan swing temporaire
+CSCO        # scan swing temporaire
+HPQ         # scan swing temporaire
+HPE         # scan swing temporaire
+DELL        # scan swing temporaire
+NET         # scan swing temporaire
+RKLB        # scan swing temporaire
+SOUN        # scan swing temporaire
+IONQ        # scan swing temporaire
+RGTI        # scan swing temporaire
+QBTS        # scan swing temporaire
+ACHR        # scan swing temporaire
+JOBY        # scan swing temporaire
+ASTS        # scan swing temporaire
+FCX         # scan swing temporaire
+NEM         # scan swing temporaire
+AA          # scan swing temporaire
+MP          # scan swing temporaire
+T           # scan swing temporaire
+VZ          # scan swing temporaire
+CMCSA       # scan swing temporaire
+MARA        # scan swing temporaire
+RIOT        # scan swing temporaire
+CLSK        # scan swing temporaire
+PYPL        # scan swing temporaire
+DIS         # scan swing temporaire
+WBD         # scan swing temporaire
+LYFT        # scan swing temporaire
+DKNG        # scan swing temporaire
+RBLX        # scan swing temporaire
+CPRT        # scan swing temporaire
+KMI         # scan swing temporaire
+CRWV        # scan swing temporaire
+TSLA        # scan swing temporaire
+PLTR        # scan swing temporaire
+MU          # scan swing temporaire
+AMD         # scan swing temporaire
+ANET        # scan swing temporaire
+
 [INDICES]
 ^FCHI       # CAC 40
 FTSEMIB.MI  # FTSE MIB
