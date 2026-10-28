@@ -51,6 +51,12 @@ BAYN.DE     # Bayer
 
 [SWING]
 IREN        # Iren
+BE          # Bloom Energy
+JPM         # JPMorgan Chase
+UEC         # Uranium Energy
+WMT         # Walmart
+SPY         # SPDR S&P 500 ETF (contexte de marché swing)
+QQQ         # Invesco QQQ Nasdaq 100 (contexte de marché swing)
 
 [INDICES]
 ^FCHI       # CAC 40
