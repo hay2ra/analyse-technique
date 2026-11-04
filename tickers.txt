@@ -50,6 +50,10 @@ JEDI.DE     # VanEck Space Innovators UCITS ETF
 BAYN.DE     # Bayer
 
 [SWING]
+FTNT        # Fortinet
+BAC         # Bank Of America
+RTX         # RTX
+NFLX        # Netflix
 IREN        # Iren
 BE          # Bloom Energy
 JPM         # JPMorgan Chase
