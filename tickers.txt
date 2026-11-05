@@ -50,17 +50,51 @@ JEDI.DE     # VanEck Space Innovators UCITS ETF
 BAYN.DE     # Bayer
 
 [SWING]
-FTNT        # Fortinet
-BAC         # Bank Of America
+# Santé
+MRK         # Merck
+GILD        # Gilead Sciences
+PFE         # Pfizer
+BMY         # Bristol-Myers Squibb
+ABT         # Abbott Laboratories
+MDT         # Medtronic
+# Banques / finance
+BAC         # Bank of America
+WFC         # Wells Fargo
+C           # Citigroup
+SCHW        # Charles Schwab
+PYPL        # PayPal
+# Énergie
+XOM         # Exxon Mobil
+CVX         # Chevron
+COP         # ConocoPhillips
+SLB         # SLB (Schlumberger)
+# Défense / industrie / transport
 RTX         # RTX
-NFLX        # Netflix
-IREN        # Iren
-BE          # Bloom Energy
-JPM         # JPMorgan Chase
-UEC         # Uranium Energy
+HON         # Honeywell
+UPS         # United Parcel Service
+CSX         # CSX
+# Consommation
 WMT         # Walmart
-SPY         # SPDR S&P 500 ETF (contexte de marché swing)
-QQQ         # Invesco QQQ Nasdaq 100 (contexte de marché swing)
+KR          # Kroger
+KO          # Coca-Cola
+PG          # Procter & Gamble
+PEP         # PepsiCo
+TJX         # TJX Companies
+NKE         # Nike
+SBUX        # Starbucks
+# Télécoms / médias
+T           # AT&T
+VZ          # Verizon
+DIS         # Walt Disney
+NFLX        # Netflix
+# Tech hors infra IA
+FTNT        # Fortinet
+CSCO        # Cisco
+# IA (1 seule, moteur déjà chargé en général)
+NVDA        # NVIDIA
+# Contexte de marché
+SPY         # SPDR S&P 500 ETF
+QQQ         # Invesco QQQ Nasdaq 100
 
 [INDICES]
 ^FCHI       # CAC 40
