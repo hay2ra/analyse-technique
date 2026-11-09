@@ -90,6 +90,10 @@ NFLX        # Netflix
 # Tech hors infra IA
 FTNT        # Fortinet
 CSCO        # Cisco
+QCOM        # Qualcomm
+UBER        # Uber Technologies
+SHOP        # Shopify
+DDOG        # Datadog
 # IA (1 seule, moteur déjà chargé en général)
 NVDA        # NVIDIA
 # Contexte de marché
