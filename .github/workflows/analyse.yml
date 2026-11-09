@@ -21,7 +21,7 @@ concurrency:
 jobs:
   analyse:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
     steps:
       - name: Vérifier l'horaire (heure de Paris)
         id: horaire
@@ -35,6 +35,12 @@ jobs:
           else
             echo "Créneau avant clôture : exécution ignorée."
             echo "ok=false" >> "$GITHUB_OUTPUT"
+          fi
+          # Scan large : seulement après la clôture américaine (ou lancement manuel)
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$H" -ge 2205 ]; then
+            echo "us=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "us=false" >> "$GITHUB_OUTPUT"
           fi
 
       - uses: actions/checkout@v4
@@ -53,6 +59,11 @@ jobs:
       - name: Lancer l'analyse
         if: steps.horaire.outputs.ok == 'true'
         run: python analyse_technique.py --fichier tickers.txt --sortie data
+
+      - name: Scan large S&P 500 + Nasdaq 100 (après la clôture US)
+        if: steps.horaire.outputs.ok == 'true' && steps.horaire.outputs.us == 'true'
+        continue-on-error: true      # un échec du scan ne bloque pas l'enregistrement
+        run: python scan_large.py --sortie data
 
       - name: Enregistrer les résultats
         if: steps.horaire.outputs.ok == 'true'
