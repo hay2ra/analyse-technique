@@ -95,7 +95,8 @@ def lire_univers(sortie: Path) -> pd.DataFrame:
         try:
             html = requests.get(url, headers=ENTETES, timeout=30).text
             trouve = False
-            for table in pd.read_html(io.StringIO(html)):
+            tables = pd.read_html(io.StringIO(html))
+            for table in tables:
                 if isinstance(table.columns, pd.MultiIndex):
                     table.columns = [" ".join(map(str, c)) for c in table.columns]
                 cols = {str(c).strip().lower(): c for c in table.columns}
@@ -106,10 +107,26 @@ def lire_univers(sortie: Path) -> pd.DataFrame:
                             return c
                     return None
 
+                if len(table) < 90:
+                    continue
                 col_ticker = chercher("symbol", "ticker")
-                col_nom = chercher("security", "company")
-                col_secteur = chercher("gics sector")
-                if col_ticker is None or col_nom is None or len(table) < 90:
+                if col_ticker is None:
+                    # Repérage par le contenu : la colonne qui contient les
+                    # grands noms de l'indice, quel que soit son intitulé
+                    for c in table.columns:
+                        valeurs = set(table[c].astype(str).str.strip())
+                        if len(valeurs & {"AAPL", "MSFT", "NVDA", "AMZN", "GOOGL"}) >= 3:
+                            col_ticker = c
+                            break
+                col_nom = chercher("security", "company", "name")
+                if col_nom is None and col_ticker is not None:
+                    autres = [c for c in table.columns if c != col_ticker
+                              and not pd.api.types.is_numeric_dtype(table[c])]
+                    col_nom = autres[0] if autres else None
+                col_secteur = chercher("gics sector", "sector", "industry")
+                if col_ticker is None or col_nom is None:
+                    print(f"    table ignorée ({len(table)} lignes) : "
+                          f"{[str(c) for c in table.columns][:6]}")
                     continue
                 trouve = True
                 t = pd.DataFrame({
@@ -123,7 +140,8 @@ def lire_univers(sortie: Path) -> pd.DataFrame:
                 print(f"  {indice} : {len(t)} titres")
                 break
             if not trouve:
-                print(f"  ! Univers {indice} : aucune table de composants reconnue")
+                print(f"  ! Univers {indice} : aucune table de composants reconnue "
+                      f"({len(tables)} tables, tailles {[len(t) for t in tables][:15]})")
         except Exception as e:
             print(f"  ! Univers {indice} : lecture impossible ({e})")
 

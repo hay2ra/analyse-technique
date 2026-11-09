@@ -1,0 +1,51 @@
+name: Backtest des règles swing
+
+# Lancement manuel uniquement : onglet Actions > « Backtest des règles swing » > Run workflow
+on:
+  workflow_dispatch:
+    inputs:
+      annees:
+        description: "Années de test (les 2 dernières sont aussi isolées)"
+        default: "5"
+      sans_resultats:
+        description: "Ignorer les dates de résultats (plus rapide, moins réaliste)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: analyse              # même file que l'analyse quotidienne : pas de conflit de push
+  cancel-in-progress: false
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Installer les librairies
+        run: pip install -r requirements.txt
+
+      - name: Lancer le backtest
+        run: |
+          OPTION=""
+          if [ "${{ inputs.sans_resultats }}" = "true" ]; then OPTION="--sans-resultats"; fi
+          python backtest.py --sortie data/backtest --annees "${{ inputs.annees }}" $OPTION
+
+      - name: Enregistrer les résultats
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898293+github-actions[bot]@users.noreply.github.com"
+          git add data/backtest
+          git diff --cached --quiet && exit 0
+          git commit -m "Backtest du $(TZ=Europe/Paris date '+%d/%m/%Y %H:%M')"
+          git pull --rebase
+          git push
