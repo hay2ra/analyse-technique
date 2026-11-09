@@ -1,5 +1,5 @@
 {
- "genere_le": "2026-11-09T16:08:58+01:00",
+ "genere_le": "2026-11-09T16:46:20+01:00",
  "nb_ok": 90,
  "nb_echecs": 0,
  "echecs": [],
@@ -96,12 +96,10 @@
   "BTC-EUR": "2026-11-09"
  },
  "signaux_achat": [
-  "ETZ.PA",
   "ISP.MI",
   "MSFT",
-  "VZ",
-  "FTSEMIB.MI",
-  "^STOXX"
+  "QCOM",
+  "FTSEMIB.MI"
  ],
  "parametres": {
   "confirmation_rsi": true,
