@@ -87,6 +87,25 @@ FUSEAU = ZoneInfo("Europe/Paris")
 # =============================================================================
 
 
+def ndx_api_nasdaq() -> pd.DataFrame | None:
+    """Composants du Nasdaq 100 via l'API publique de nasdaq.com (secours)."""
+    try:
+        r = requests.get("https://api.nasdaq.com/api/quote/list-type/nasdaq100",
+                         headers={"User-Agent": "Mozilla/5.0", "Accept": "application/json"},
+                         timeout=30)
+        lignes = r.json()["data"]["data"]["rows"]
+        t = pd.DataFrame({
+            "ticker": [x["symbol"].strip() for x in lignes],
+            "nom": [x.get("companyName", "").strip() for x in lignes],
+            "secteur": "",
+            "indice": "NDX100",
+        })
+        return t if len(t) >= 90 else None
+    except Exception as e:
+        print(f"  ! API Nasdaq : {e}")
+        return None
+
+
 def lire_univers(sortie: Path) -> pd.DataFrame:
     """Composants S&P 500 + Nasdaq 100 avec secteur GICS. Cache en secours."""
     cache = sortie / "univers_scan.csv"
@@ -139,6 +158,12 @@ def lire_univers(sortie: Path) -> pd.DataFrame:
                 blocs.append(t)
                 print(f"  {indice} : {len(t)} titres")
                 break
+            if not trouve and indice == "NDX100":
+                t = ndx_api_nasdaq()
+                if t is not None:
+                    trouve = True
+                    blocs.append(t)
+                    print(f"  {indice} : {len(t)} titres (API Nasdaq)")
             if not trouve:
                 print(f"  ! Univers {indice} : aucune table de composants reconnue "
                       f"({len(tables)} tables, tailles {[len(t) for t in tables][:15]})")
