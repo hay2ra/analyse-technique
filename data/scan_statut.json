@@ -1,14 +1,15 @@
 {
- "genere_le": "2026-11-09T17:07:54+01:00",
+ "genere_le": "2026-11-09T17:36:53+01:00",
  "derniere_seance": "2026-11-09",
- "nb_univers": 503,
- "nb_ok": 500,
- "nb_candidats": 126,
- "nb_candidats_resultats_connus": 126,
+ "nb_univers": 518,
+ "nb_ok": 514,
+ "nb_candidats": 123,
+ "nb_candidats_resultats_connus": 123,
  "nb_candidats_resultats_proches": 6,
  "echecs": [
   "FDXF",
   "HONA",
+  "SPCX",
   "VYLR"
  ],
  "filtres": {
