@@ -10,9 +10,11 @@ Wikipédia à chaque exécution. En cas d'échec, la dernière liste enregistré
 
 Produit dans le dossier de sortie :
   - scan.csv            : une ligne par titre de l'univers (indicateurs, recul
-                          depuis le plus haut 52 semaines, tendance, filtres)
-  - scan_historique.csv : les 130 dernières séances des seuls titres retenus
-                          par le préfiltre (pour bâtir un plan de trade)
+                          depuis le plus haut 52 semaines, tendance, force
+                          relative, score de setup, dates de résultats)
+  - scan_historique.csv : les 130 dernières séances des seuls candidats
+  - marche.json         : santé du marché (largeur S&P 500, VIX, indices,
+                          ETF sectoriels et force relative)
   - univers_scan.csv    : la liste de l'univers (cache)
   - scan_statut.json    : date d'exécution, tailles, échecs
 
@@ -21,6 +23,12 @@ Préfiltre (colonne « candidat ») :
   - recul depuis le plus haut 52 semaines entre RECUL_MIN et RECUL_MAX
   - tendance de fond intacte (EMA50 > EMA200, ou cours > EMA200 montante)
     OU recul > 25 % (setup R3 possible, à valider à la main)
+
+Score de setup (0 à 10, colonne « score_setup ») : contact récent avec un
+support (EMA20/50/200), bougie de reprise, RSI et MACD qui remontent, volume
+en baisse dans le repli, plus bas qui monte, force relative, tendance. Les
+titres qui publient leurs résultats dans moins de JOURS_RESULTATS_MIN séances
+sont signalés (colonne « resultats_proches ») : à exclure.
 
 Usage :
     python scan_large.py --sortie data
@@ -32,10 +40,11 @@ import io
 import json
 import sys
 import time
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+import numpy as np
 import pandas as pd
 import requests
 import yfinance as yf
@@ -52,6 +61,20 @@ PRIX_MIN, PRIX_MAX = 5.0, 250.0
 VOLUME_MIN = 1_000_000      # titres/jour, moyenne 20 séances
 RECUL_MIN, RECUL_MAX = -35.0, -10.0   # % depuis le plus haut 52 semaines
 SEANCES_HISTORIQUE = 130
+
+JOURS_RESULTATS_MIN = 7     # séances minimum avant la prochaine publication
+CONTACT_SUPPORT_ATR = 0.5   # plus bas à moins de 0,5 ATR d'une EMA = contact
+
+REFERENCE = "SPY"
+MARCHE = {
+    "SPY": "S&P 500", "QQQ": "Nasdaq 100", "IWM": "Russell 2000",
+    "^VIX": "VIX",
+    "XLK": "Technologie", "SMH": "Semi-conducteurs", "XLC": "Communication",
+    "XLY": "Consommation discrétionnaire", "XLP": "Consommation de base",
+    "XLV": "Santé", "XLF": "Finance", "XLI": "Industrie", "XLE": "Énergie",
+    "XLB": "Matériaux", "XLU": "Services aux collectivités",
+    "XLRE": "Immobilier",
+}
 
 SOURCES = {
     "SP500": "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
@@ -123,6 +146,8 @@ def lire_univers(sortie: Path) -> pd.DataFrame:
     sys.exit(1)
 
 
+# ----------------------------------------------------------------- indicateurs
+
 def ema(s: pd.Series, n: int) -> pd.Series:
     return s.ewm(span=n, adjust=False).mean()
 
@@ -151,10 +176,34 @@ def indicateurs(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def r(x, n=2):
-    return None if pd.isna(x) else round(float(x), n)
+    return None if x is None or pd.isna(x) else round(float(x), n)
 
 
-def resumer(t: str, info: dict, df: pd.DataFrame) -> dict:
+def perf(c: pd.Series, n: int) -> float:
+    return (c.iloc[-1] / c.iloc[-1 - n] - 1) * 100 if len(c) > n else np.nan
+
+
+def bougie_reprise(df: pd.DataFrame) -> str:
+    """Type de bougie de reprise sur la dernière séance ('' si aucune)."""
+    d, p = df.iloc[-1], df.iloc[-2]
+    amplitude = d["High"] - d["Low"]
+    if amplitude <= 0:
+        return ""
+    corps_bas = min(d["Open"], d["Close"])
+    meche_basse = corps_bas - d["Low"]
+    if (meche_basse >= 0.5 * amplitude
+            and d["Close"] >= d["Low"] + 0.6 * amplitude):
+        return "marteau"
+    if (p["Close"] < p["Open"] and d["Close"] > d["Open"]
+            and d["Close"] >= p["Open"] and d["Open"] <= p["Close"]):
+        return "avalement haussier"
+    if (p["Close"] < p["Open"] and d["Close"] > p["Close"]
+            and d["Close"] >= d["Low"] + 0.67 * amplitude):
+        return "clôture haute après baisse"
+    return ""
+
+
+def resumer(t: str, info: dict, df: pd.DataFrame, ref: pd.Series | None) -> dict:
     d, p = df.iloc[-1], df.iloc[-2]
     un_an = df.iloc[-252:]
     haut52 = un_an["High"].max()
@@ -164,11 +213,46 @@ def resumer(t: str, info: dict, df: pd.DataFrame) -> dict:
     ema200_monte = d["EMA200"] > df["EMA200"].iloc[-11]
     tendance_ok = bool(d["EMA50"] > d["EMA200"]
                        or (d["Close"] > d["EMA200"] and ema200_monte))
+    atr = d["ATR"]
+
+    # Contact avec un support : plus bas des 3 dernières séances proche d'une EMA
+    recents = df.iloc[-3:]
+    contacts = []
+    for n in (20, 50, 200):
+        ecart = ((recents["Low"] - recents[f"EMA{n}"]).abs() / atr).min()
+        if ecart <= CONTACT_SUPPORT_ATR and d["Close"] >= d[f"EMA{n}"] - 0.25 * atr:
+            contacts.append(f"EMA{n}")
+    # Volume en baisse dans le repli : séances baissières des 5 dernières
+    cinq = df.iloc[-5:]
+    baissieres = cinq[cinq["Close"] < cinq["Open"]]
+    volume_repli = (r(baissieres["Vol_ratio"].mean())
+                    if len(baissieres) else None)
+    # Plus bas qui monte : plus bas des 10 dernières séances vs les 10 d'avant
+    plus_bas_monte = bool(df["Low"].iloc[-10:].min() > df["Low"].iloc[-20:-10].min())
+    bougie = bougie_reprise(df)
+
+    rs1 = rs3 = np.nan
+    if ref is not None:
+        c = df["Close"]
+        ref_al = ref.reindex(c.index).ffill()
+        rs1 = perf(c, 21) - perf(ref_al, 21)
+        rs3 = perf(c, 63) - perf(ref_al, 63)
+
+    # Score de setup sur 10
+    score = 0
+    score += 2 if contacts else 0
+    score += 2 if bougie else 0
+    score += 1 if d["RSI"] > p["RSI"] and d["RSI"] < 50 else 0
+    score += 1 if 30 <= d["RSI"] <= 50 else 0
+    score += 1 if d["MACD_hist"] > p["MACD_hist"] else 0
+    score += 1 if volume_repli is not None and volume_repli < 0.9 else 0
+    score += 1 if plus_bas_monte else 0
+    score += 1 if not np.isnan(rs3) and rs3 > 0 else 0
+    score = min(score + (1 if tendance_ok else 0), 10)
 
     prix_ok = PRIX_MIN <= d["Close"] <= PRIX_MAX
     volume_ok = d["Vol_moy20"] >= VOLUME_MIN
     recul_ok = RECUL_MIN <= recul <= RECUL_MAX
-    r3_possible = recul < -25 or not ema50_monte
     candidat = bool(prix_ok and volume_ok and recul_ok
                     and (tendance_ok or recul < -25))
 
@@ -190,6 +274,9 @@ def resumer(t: str, info: dict, df: pd.DataFrame) -> dict:
         "ema20": r(d["EMA20"], 4),
         "ema50": r(d["EMA50"], 4),
         "ema200": r(d["EMA200"], 4),
+        "dist_ema20_atr": r((d["Close"] - d["EMA20"]) / atr),
+        "dist_ema50_atr": r((d["Close"] - d["EMA50"]) / atr),
+        "dist_ema200_atr": r((d["Close"] - d["EMA200"]) / atr),
         "ema50_monte": bool(ema50_monte),
         "ema200_monte": bool(ema200_monte),
         "tendance_ok": tendance_ok,
@@ -197,15 +284,31 @@ def resumer(t: str, info: dict, df: pd.DataFrame) -> dict:
         "rsi_veille": r(p["RSI"], 1),
         "macd_hist": r(d["MACD_hist"], 4),
         "macd_hist_veille": r(p["MACD_hist"], 4),
-        "atr": r(d["ATR"], 4),
-        "atr_pct": r(d["ATR"] / d["Close"] * 100),
+        "atr": r(atr, 4),
+        "atr_pct": r(atr / d["Close"] * 100),
         "volume_moy20": r(d["Vol_moy20"], 0),
         "volume_ratio": r(d["Vol_ratio"]),
+        "volume_repli": volume_repli,
+        "support_contact": "+".join(contacts),
+        "bougie_reprise": bougie,
+        "plus_bas_monte": plus_bas_monte,
+        "rs_1m": r(rs1, 1),
+        "rs_3m": r(rs3, 1),
+        "perf_1m": r(perf(df["Close"], 21), 1),
         "cout_2_actions": r(2 * d["Close"]),
-        "r3_possible": bool(r3_possible),
+        "r3_possible": bool(recul < -25 or not ema50_monte),
+        "score_setup": int(score),
         "candidat": candidat,
+        # complétés plus tard pour les candidats
+        "prochains_resultats": None,
+        "jours_avant_resultats": None,
+        "derniers_resultats": None,
+        "jours_depuis_resultats": None,
+        "resultats_proches": None,
     }
 
+
+# ------------------------------------------------------------------- données
 
 def telecharger_lot(tickers: list[str]) -> dict[str, pd.DataFrame]:
     """Téléchargement groupé ; renvoie {ticker: OHLCV} pour les titres valides."""
@@ -224,11 +327,107 @@ def telecharger_lot(tickers: list[str]) -> dict[str, pd.DataFrame]:
     return resultat
 
 
+def dates_resultats(ticker: str) -> tuple[date | None, date | None]:
+    """(prochaine publication, dernière publication) via yfinance."""
+    aujourd_hui = pd.Timestamp(date.today())
+    prochaine = derniere = None
+    try:
+        ed = yf.Ticker(ticker).get_earnings_dates(limit=8)
+        if ed is not None and not ed.empty:
+            dates = pd.to_datetime(ed.index).tz_localize(None).normalize()
+            futures = sorted(x for x in dates if x >= aujourd_hui)
+            passees = sorted(x for x in dates if x < aujourd_hui)
+            prochaine = futures[0].date() if futures else None
+            derniere = passees[-1].date() if passees else None
+    except Exception:
+        pass
+    if prochaine is None:
+        try:
+            cal = yf.Ticker(ticker).calendar
+            liste = cal.get("Earnings Date") if isinstance(cal, dict) else None
+            if liste:
+                futures = sorted(x for x in liste if pd.Timestamp(x) >= aujourd_hui)
+                prochaine = futures[0] if futures else None
+        except Exception:
+            pass
+    return prochaine, derniere
+
+
+def completer_resultats(lignes: list[dict]) -> int:
+    """Ajoute les dates de résultats aux candidats. Renvoie le nombre trouvé."""
+    aujourd_hui = date.today()
+    trouves = 0
+    for ligne in lignes:
+        if not ligne["candidat"]:
+            continue
+        prochaine, derniere = dates_resultats(ligne["ticker"])
+        if prochaine:
+            jours = int(np.busday_count(aujourd_hui, prochaine))
+            ligne["prochains_resultats"] = prochaine.isoformat()
+            ligne["jours_avant_resultats"] = jours
+            ligne["resultats_proches"] = jours < JOURS_RESULTATS_MIN
+            trouves += 1
+        if derniere:
+            ligne["derniers_resultats"] = derniere.isoformat()
+            ligne["jours_depuis_resultats"] = int(np.busday_count(derniere, aujourd_hui))
+        time.sleep(0.3)
+    return trouves
+
+
+def sante_marche(lignes: list[dict], marche: dict[str, pd.DataFrame]) -> dict:
+    """Largeur du S&P 500, VIX, indices et ETF sectoriels."""
+    scan = pd.DataFrame(lignes)
+    sp = scan[scan["indice"].str.contains("SP500", na=False)]
+    if sp.empty:
+        sp = scan
+    largeur = {
+        "nb_titres": int(len(sp)),
+        "pct_au_dessus_ema20": r((sp["cloture"] > sp["ema20"]).mean() * 100, 1),
+        "pct_au_dessus_ema50": r((sp["cloture"] > sp["ema50"]).mean() * 100, 1),
+        "pct_au_dessus_ema200": r((sp["cloture"] > sp["ema200"]).mean() * 100, 1),
+        "pct_proches_plus_haut_52s": r((sp["recul_pct"] >= -2).mean() * 100, 1),
+        "pct_recul_plus_20": r((sp["recul_pct"] <= -20).mean() * 100, 1),
+        "pct_hausse_du_jour": r((sp["var_jour_pct"] > 0).mean() * 100, 1),
+    }
+    ref = marche.get(REFERENCE)
+    indices = []
+    for t, nom in MARCHE.items():
+        df = marche.get(t)
+        if df is None or len(df) < 210:
+            continue
+        df = indicateurs(df)
+        d = df.iloc[-1]
+        c = df["Close"]
+        ligne = {
+            "ticker": t, "nom": nom,
+            "cloture": r(d["Close"]),
+            "var_jour_pct": r((d["Close"] / df["Close"].iloc[-2] - 1) * 100),
+            "perf_1s": r(perf(c, 5), 1), "perf_1m": r(perf(c, 21), 1),
+            "perf_3m": r(perf(c, 63), 1),
+            "recul_pct": r((d["Close"] / df["High"].iloc[-252:].max() - 1) * 100, 1),
+            "au_dessus_ema20": bool(d["Close"] > d["EMA20"]),
+            "au_dessus_ema50": bool(d["Close"] > d["EMA50"]),
+            "au_dessus_ema200": bool(d["Close"] > d["EMA200"]),
+            "ema20": r(d["EMA20"]), "ema50": r(d["EMA50"]), "ema200": r(d["EMA200"]),
+            "rsi": r(d["RSI"], 1),
+        }
+        if ref is not None and t != REFERENCE and t != "^VIX":
+            ref_al = ref["Close"].reindex(c.index).ffill()
+            ligne["rs_1m_vs_spy"] = r(perf(c, 21) - perf(ref_al, 21), 1)
+            ligne["rs_3m_vs_spy"] = r(perf(c, 63) - perf(ref_al, 63), 1)
+        indices.append(ligne)
+    return {"largeur_sp500": largeur, "indices_et_secteurs": indices}
+
+
+# ---------------------------------------------------------------------- main
+
 def main():
     parser = argparse.ArgumentParser(description="Scan large S&P 500 + Nasdaq 100")
     parser.add_argument("--sortie", default="data", help="dossier de sortie")
     parser.add_argument("--limite", type=int, default=0,
                         help="nombre max de titres (test rapide)")
+    parser.add_argument("--sans-resultats", action="store_true",
+                        help="ne pas récupérer les dates de résultats")
     args = parser.parse_args()
     sortie = Path(args.sortie)
 
@@ -239,6 +438,14 @@ def main():
     infos = univers.set_index("ticker").to_dict(orient="index")
     tickers = list(infos)
     print(f"Scan large de {len(tickers)} titres — {debut:%d/%m/%Y %H:%M} (Paris)")
+
+    # Indices, VIX et ETF sectoriels d'abord (référence pour la force relative)
+    try:
+        marche = telecharger_lot(list(MARCHE))
+    except Exception as e:
+        print(f"  ! Indices et secteurs indisponibles ({e})")
+        marche = {}
+    ref = marche[REFERENCE]["Close"] if REFERENCE in marche else None
 
     lignes, historiques, echecs = [], {}, []
     for i in range(0, len(tickers), TAILLE_LOT):
@@ -259,7 +466,7 @@ def main():
                 continue
             try:
                 df = indicateurs(donnees[t])
-                ligne = resumer(t, infos[t], df)
+                ligne = resumer(t, infos[t], df, ref)
                 lignes.append(ligne)
                 if ligne["candidat"]:
                     historiques[t] = df
@@ -272,9 +479,14 @@ def main():
         print("Aucune donnée exploitable.")
         sys.exit(1)
 
+    nb_resultats = 0
+    if not args.sans_resultats:
+        print("Dates de résultats des candidats…")
+        nb_resultats = completer_resultats(lignes)
+
     sortie.mkdir(parents=True, exist_ok=True)
-    scan = pd.DataFrame(lignes).sort_values(["candidat", "recul_pct"],
-                                            ascending=[False, True])
+    scan = pd.DataFrame(lignes).sort_values(
+        ["candidat", "score_setup", "recul_pct"], ascending=[False, False, True])
     scan.to_csv(sortie / "scan.csv", index=False)
 
     blocs = []
@@ -286,23 +498,36 @@ def main():
     if blocs:
         pd.concat(blocs).to_csv(sortie / "scan_historique.csv")
 
+    marche_json = sante_marche(lignes, marche)
+    marche_json["genere_le"] = datetime.now(FUSEAU).isoformat(timespec="seconds")
+    (sortie / "marche.json").write_text(
+        json.dumps(marche_json, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    candidats = scan[scan["candidat"]]
     statut = {
         "genere_le": datetime.now(FUSEAU).isoformat(timespec="seconds"),
         "derniere_seance": scan["date_seance"].max(),
         "nb_univers": len(tickers),
         "nb_ok": len(lignes),
-        "nb_candidats": int(scan["candidat"].sum()),
+        "nb_candidats": int(len(candidats)),
+        "nb_candidats_resultats_connus": nb_resultats,
+        "nb_candidats_resultats_proches": int((candidats["resultats_proches"] == True).sum()),  # noqa: E712
         "echecs": echecs,
         "filtres": {"prix": [PRIX_MIN, PRIX_MAX], "volume_min": VOLUME_MIN,
-                    "recul_pct": [RECUL_MIN, RECUL_MAX]},
+                    "recul_pct": [RECUL_MIN, RECUL_MAX],
+                    "jours_resultats_min": JOURS_RESULTATS_MIN},
     }
     (sortie / "scan_statut.json").write_text(
         json.dumps(statut, ensure_ascii=False, indent=1), encoding="utf-8")
 
-    vue = scan[scan["candidat"]][["ticker", "secteur", "cloture", "recul_pct",
-                                  "tendance_ok", "rsi", "atr_pct"]]
-    print(f"\n{statut['nb_candidats']} candidats sur {len(lignes)} titres analysés")
-    print(vue.head(40).to_string(index=False))
+    l = marche_json["largeur_sp500"]
+    print(f"\nLargeur S&P 500 : {l['pct_au_dessus_ema50']} % au-dessus de l'EMA50, "
+          f"{l['pct_au_dessus_ema200']} % au-dessus de l'EMA200")
+    vue = candidats[["ticker", "secteur", "cloture", "recul_pct", "score_setup",
+                     "support_contact", "bougie_reprise", "rs_3m",
+                     "jours_avant_resultats"]]
+    print(f"{len(candidats)} candidats sur {len(lignes)} titres analysés")
+    print(vue.head(30).to_string(index=False))
     if echecs:
         print(f"Échecs ({len(echecs)}) : {', '.join(echecs[:30])}")
 
