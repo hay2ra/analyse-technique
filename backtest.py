@@ -22,6 +22,8 @@ Principe
   durée max 20 séances, sortie la veille des résultats.
 - Hypothèses prudentes : si le stop et l'objectif sont touchés la même séance,
   on compte le stop ; un gap sous le stop sort à l'ouverture.
+- Règles v3.1 (famille « plan31 ») : R2 sans condition de tendance, R1 à
+  15 % de recul au moins, R3 seulement si SPY ou QQQ sous l'EMA50, REIT exclus.
 - Témoins (pour savoir si les setups apportent quelque chose) :
     « R2 large » : R2 sans les conditions de tendance ni d'EMA50 montante.
     « Zone »     : achat à l'ouverture dès qu'un titre est dans la zone de
@@ -133,7 +135,8 @@ def dates_resultats(tickers: list[str], cache: Path) -> dict[str, list[pd.Timest
 
 # -------------------------------------------------------------- indicateurs
 
-def preparer(df: pd.DataFrame, ref: pd.DataFrame) -> pd.DataFrame:
+def preparer(df: pd.DataFrame, ref: pd.DataFrame,
+             correction: pd.Series | None = None) -> pd.DataFrame:
     """Indicateurs et signaux, chaque valeur ne dépend que du passé."""
     df = sl.indicateurs(df.copy())
     df["EMA10"] = sl.ema(df["Close"], 10)
@@ -217,6 +220,18 @@ def preparer(df: pd.DataFrame, ref: pd.DataFrame) -> pd.DataFrame:
     df["stop_plan"] = np.select([df["setup"] == "R1", df["setup"] == "R2",
                                  df["setup"] == "R3"],
                                 [stop_r1, stop_r2, bas_base - 0.1 * atr], np.nan)
+    # Règles v3.1 : R2 sans condition de tendance, R1 à 15 % de recul au moins,
+    # R3 seulement quand SPY ou QQQ est sous son EMA50
+    corr = (correction.reindex(df.index).ffill().fillna(False).astype(bool)
+            if correction is not None else pd.Series(True, index=df.index))
+    df["setup31"] = ""
+    df.loc[r3 & corr, "setup31"] = "R3"
+    df.loc[r1 & (recul <= -0.15), "setup31"] = "R1"
+    df.loc[r2_large, "setup31"] = "R2"
+    df["declencheur31"] = np.where(df["setup31"] == "R3", haut_base, h) + MARGE_ENTREE
+    df["stop31"] = np.select([df["setup31"] == "R1", df["setup31"] == "R2",
+                              df["setup31"] == "R3"],
+                             [stop_r1, stop_r2, bas_base - 0.1 * atr], np.nan)
     df["r2_large"] = r2_large
     df["stop_r2_large"] = stop_r2
     df["zone"] = zone
@@ -316,6 +331,11 @@ def simuler(ticker: str, df: pd.DataFrame, famille: str, debut: int,
         declencheur = df["declencheur"].to_numpy()
         stops = df["stop_plan"].to_numpy()
         setups = df["setup"].to_numpy()
+    elif famille == "plan31":
+        signal = (df["setup31"] != "").to_numpy()
+        declencheur = df["declencheur31"].to_numpy()
+        stops = df["stop31"].to_numpy()
+        setups = df["setup31"].to_numpy()
     elif famille == "r2_large":
         signal = df["r2_large"].to_numpy()
         declencheur = (df["High"] + MARGE_ENTREE).to_numpy()
@@ -465,9 +485,10 @@ def tableau(lignes: list[tuple[str, dict]], titre_col: str) -> str:
 # ----------------------------------------------------------------- portefeuille
 
 def portefeuille(trades: pd.DataFrame, donnees: dict, regime: pd.Series,
-                 secteurs: dict, debut: pd.Timestamp) -> tuple[pd.DataFrame, dict]:
+                 secteurs: dict, debut: pd.Timestamp,
+                 famille: str = "plan") -> tuple[pd.DataFrame, dict]:
     """Compte de 2 000 $ avec plafonds de risque, de secteur et de cash (V1)."""
-    t = trades[(trades["famille"] == "plan")].copy()
+    t = trades[(trades["famille"] == famille)].copy()
     t["date_entree"] = pd.to_datetime(t["date_entree"])
     t["date_sortie"] = pd.to_datetime(t["date_sortie"])
     t["date_t1"] = pd.to_datetime(t["date_t1"])
@@ -573,14 +594,17 @@ def main():
     tous, comptes = [], {}
     for k, (t, df) in enumerate(donnees.items(), 1):
         try:
-            p = preparer(df, spy)
+            p = preparer(df, spy, regime)
         except Exception as e:
             print(f"  ! {t} : {e}")
             continue
         donnees[t] = p
         i0 = int(np.searchsorted(p.index.values, np.datetime64(debut)))
         i0 = max(i0, 252)
-        for famille in ("plan", "r2_large", "zone"):
+        reit = str(secteurs.get(t, "")).strip().lower() == "real estate"
+        for famille in ("plan", "plan31", "r2_large", "zone"):
+            if famille == "plan31" and reit:
+                continue
             tr, cpt = simuler(t, p, famille, i0, resultats.get(t))
             for tt in tr:
                 tt["correction"] = bool(regime.get(pd.Timestamp(tt["date_signal"]), False))
@@ -612,10 +636,15 @@ def main():
                              "stop_temps": STOP_TEMPS, "duree_max": DUREE_MAX,
                              "validite_ordre": VALIDITE_ORDRE}}
 
+    p31 = trades["famille"] == "plan31"
     groupes = [("R1", plan & (trades["setup"] == "R1")),
                ("R2", plan & (trades["setup"] == "R2")),
                ("R3 (demi-taille)", plan & (trades["setup"] == "R3")),
-               ("**R1+R2+R3**", plan),
+               ("**R1+R2+R3 (v3)**", plan),
+               ("v3.1 R1 (recul ≥ 15 %)", p31 & (trades["setup"] == "R1")),
+               ("v3.1 R2 (sans tendance)", p31 & (trades["setup"] == "R2")),
+               ("v3.1 R3 (en correction)", p31 & (trades["setup"] == "R3")),
+               ("**v3.1 total (sans REIT)**", p31),
                ("Témoin R2 large", trades["famille"] == "r2_large"),
                ("Témoin Zone sans setup", trades["famille"] == "zone")]
     resume["par_setup"] = {}
@@ -656,16 +685,19 @@ def main():
                   f"{c['trop_cher']} | {c['non_execute']} | {c['execute']} |\n")
 
     # ---- portefeuille
-    for nom_p, deb_p in ((f"{ANNEES_TEST} ans", debut), (f"{ANNEES_RECENT} ans", debut_recent)):
+    for fam, nom_p, deb_p in (("plan", f"{ANNEES_TEST} ans", debut),
+                              ("plan", f"{ANNEES_RECENT} ans", debut_recent),
+                              ("plan31", f"{ANNEES_TEST} ans v3.1", debut),
+                              ("plan31", f"{ANNEES_RECENT} ans v3.1", debut_recent)):
         j, rp = portefeuille(trades[pd.to_datetime(trades["date_entree"]) >= deb_p],
-                             donnees, regime, secteurs, deb_p)
+                             donnees, regime, secteurs, deb_p, fam)
         spy_p = spy["Close"][spy.index >= deb_p]
         rp["spy_perf_pct"] = round((spy_p.iloc[-1] / spy_p.iloc[0] - 1) * 100, 1)
         spy_dd = (spy_p / spy_p.cummax() - 1).min()
         rp["spy_drawdown_max_pct"] = round(spy_dd * 100, 1)
         resume[f"portefeuille_{nom_p.replace(' ', '_')}"] = rp
         j.to_csv(sortie / f"portefeuille_{nom_p.replace(' ', '_')}.csv", index=False)
-        md.append(f"\n## Compte de 2 000 $ simulé sur {nom_p} (plan V1, plafonds de risque et de secteur)\n")
+        md.append(f"\n## Compte de 2 000 $ simulé sur {nom_p} (sorties V1, plafonds de risque et de secteur)\n")
         md.append(f"- Valeur finale : **{rp['valeur_finale']:.0f} $** ({rp['perf_pct']:+.1f} %), "
                   f"drawdown max {rp['drawdown_max_pct']} %\n")
         md.append(f"- SPY sur la même période : {rp['spy_perf_pct']:+.1f} %, drawdown max {rp['spy_drawdown_max_pct']} %\n")

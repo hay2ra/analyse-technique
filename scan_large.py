@@ -21,14 +21,17 @@ Produit dans le dossier de sortie :
 Préfiltre (colonne « candidat ») :
   - cours entre PRIX_MIN et PRIX_MAX, volume moyen 20 j ≥ VOLUME_MIN
   - recul depuis le plus haut 52 semaines entre RECUL_MIN et RECUL_MAX
-  - tendance de fond intacte (EMA50 > EMA200, ou cours > EMA200 montante)
-    OU recul > 25 % (setup R3 possible, à valider à la main)
+  - hors immobilier coté (REIT) ; plus de condition de tendance depuis la v3.1
+    (le R2 n'en demande pas). Colonnes r1/r2/r3_possible et pistes_setup :
+    pistes à confirmer à la main ; tri par priorité R2 > R1 > R3.
 
 Score de setup (0 à 10, colonne « score_setup ») : contact récent avec un
 support (EMA20/50/200), bougie de reprise, RSI et MACD qui remontent, volume
 en baisse dans le repli, plus bas qui monte, force relative, tendance. Les
 titres qui publient leurs résultats dans moins de JOURS_RESULTATS_MIN séances
 sont signalés (colonne « resultats_proches ») : à exclure.
+Le backtest du 9/11/2026 montre que ce score ne prédit pas le résultat :
+il sert à repérer, pas à classer.
 
 Usage :
     python scan_large.py --sortie data
@@ -293,11 +296,24 @@ def resumer(t: str, info: dict, df: pd.DataFrame, ref: pd.Series | None) -> dict
     score += 1 if not np.isnan(rs3) and rs3 > 0 else 0
     score = min(score + (1 if tendance_ok else 0), 10)
 
+    # Pistes de setup selon les règles v3.1 (à confirmer à la main)
+    rsi_min5 = float(df["RSI"].iloc[-5:].min())
+    ancien_bas = df["Low"].iloc[-120:-10].min()
+    test_plus_bas = bool(abs(recents["Low"].min() - ancien_bas) / atr <= 0.75)
+    r1_possible = bool(tendance_ok and ema50_monte and -25 <= recul <= -10
+                       and ("EMA20" in contacts or "EMA50" in contacts))
+    r2_possible = bool(-25 <= recul <= -10 and rsi_min5 < 35 and d["RSI"] > p["RSI"]
+                       and ("EMA200" in contacts or test_plus_bas))
+    r3_possible = bool(recul < -25 or not ema50_monte)
+    pistes = [n for n, ok in (("R2", r2_possible), ("R1", r1_possible),
+                              ("R3", r3_possible)) if ok]
+
     prix_ok = PRIX_MIN <= d["Close"] <= PRIX_MAX
     volume_ok = d["Vol_moy20"] >= VOLUME_MIN
     recul_ok = RECUL_MIN <= recul <= RECUL_MAX
-    candidat = bool(prix_ok and volume_ok and recul_ok
-                    and (tendance_ok or recul < -25))
+    reit = str(info.get("secteur", "")).strip().lower() == "real estate"
+    # v3.1 : plus de condition de tendance (R2 n'en demande pas), REIT exclus
+    candidat = bool(prix_ok and volume_ok and recul_ok and not reit)
 
     return {
         "ticker": t,
@@ -339,7 +355,13 @@ def resumer(t: str, info: dict, df: pd.DataFrame, ref: pd.Series | None) -> dict
         "rs_3m": r(rs3, 1),
         "perf_1m": r(perf(df["Close"], 21), 1),
         "cout_2_actions": r(2 * d["Close"]),
-        "r3_possible": bool(recul < -25 or not ema50_monte),
+        "rsi_min5": r(rsi_min5, 1),
+        "test_ancien_plus_bas": test_plus_bas,
+        "r1_possible": r1_possible,
+        "r2_possible": r2_possible,
+        "r3_possible": r3_possible,
+        "pistes_setup": "+".join(pistes),
+        "priorite": {"R2": 1, "R1": 2, "R3": 3}.get(pistes[0], 9) if pistes else 9,
         "score_setup": int(score),
         "candidat": candidat,
         # complétés plus tard pour les candidats
@@ -529,7 +551,7 @@ def main():
 
     sortie.mkdir(parents=True, exist_ok=True)
     scan = pd.DataFrame(lignes).sort_values(
-        ["candidat", "score_setup", "recul_pct"], ascending=[False, False, True])
+        ["candidat", "priorite", "recul_pct"], ascending=[False, True, True])
     scan.to_csv(sortie / "scan.csv", index=False)
 
     blocs = []
@@ -547,7 +569,15 @@ def main():
         json.dumps(marche_json, ensure_ascii=False, indent=1), encoding="utf-8")
 
     candidats = scan[scan["candidat"]]
+    sous_ema50 = [x["ticker"] for x in marche_json.get("indices_et_secteurs", [])
+                  if x.get("ticker") in ("SPY", "QQQ") and x.get("au_dessus_ema50") is False]
     statut = {
+        "correction": bool(sous_ema50),
+        "indices_sous_ema50": sous_ema50,
+        "plafond_risque_usd": 60 if sous_ema50 else 120,
+        "r3_autorise": bool(sous_ema50),
+        "pistes": {k: int(candidats["pistes_setup"].str.contains(k).sum())
+                   for k in ("R1", "R2", "R3")},
         "genere_le": datetime.now(FUSEAU).isoformat(timespec="seconds"),
         "derniere_seance": scan["date_seance"].max(),
         "nb_univers": len(tickers),
@@ -566,10 +596,11 @@ def main():
     l = marche_json["largeur_sp500"]
     print(f"\nLargeur S&P 500 : {l['pct_au_dessus_ema50']} % au-dessus de l'EMA50, "
           f"{l['pct_au_dessus_ema200']} % au-dessus de l'EMA200")
-    vue = candidats[["ticker", "secteur", "cloture", "recul_pct", "score_setup",
+    vue = candidats[["ticker", "secteur", "cloture", "recul_pct", "pistes_setup",
                      "support_contact", "bougie_reprise", "rs_3m",
                      "jours_avant_resultats"]]
-    print(f"{len(candidats)} candidats sur {len(lignes)} titres analysés")
+    print(f"{len(candidats)} candidats sur {len(lignes)} titres analysés — "
+          f"marché {'en correction (R3 autorisé, risque 60 $)' if sous_ema50 else 'calme (pas de R3, risque 120 $)'}")
     print(vue.head(30).to_string(index=False))
     if echecs:
         print(f"Échecs ({len(echecs)}) : {', '.join(echecs[:30])}")
