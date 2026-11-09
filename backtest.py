@@ -92,7 +92,6 @@ NOMS_VARIANTES = {"V1": "plan v3 (moitié à 1,5R, suiveur plus bas veille, 2,5R
 # ------------------------------------------------------------------- données
 
 def telecharger(tickers: list[str]) -> dict[str, pd.DataFrame]:
-    sl.PERIODE = PERIODE
     donnees = {}
     for i in range(0, len(tickers), sl.TAILLE_LOT):
         lot = tickers[i:i + sl.TAILLE_LOT]
@@ -571,12 +570,25 @@ def main():
     sortie.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
 
+    sl.PERIODE = PERIODE
     univers = sl.lire_univers(Path("data"))
     secteurs = dict(zip(univers["ticker"], univers["secteur"]))
     tickers = univers["ticker"].tolist()
     print(f"Backtest sur {len(tickers)} titres, {ANNEES_TEST} ans de test", flush=True)
 
-    marche = telecharger(["SPY", "QQQ"])
+    marche = {}
+    for essai in range(4):                 # yfinance peut buter sur son cache
+        manquants = [x for x in ("SPY", "QQQ") if x not in marche]
+        if not manquants:
+            break
+        for x in manquants:
+            try:
+                marche.update(sl.telecharger_lot([x]))
+            except Exception as e:
+                print(f"  ! {x} : {e}")
+        time.sleep(5)
+    if "SPY" not in marche or "QQQ" not in marche:
+        raise SystemExit("SPY ou QQQ introuvable : arrêt.")
     spy, qqq = marche["SPY"], marche["QQQ"]
     regime = ((spy["Close"] < sl.ema(spy["Close"], 50))
               | (qqq["Close"].reindex(spy.index).ffill()
