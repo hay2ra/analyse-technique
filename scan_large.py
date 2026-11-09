@@ -71,13 +71,24 @@ def lire_univers(sortie: Path) -> pd.DataFrame:
     for indice, url in SOURCES.items():
         try:
             html = requests.get(url, headers=ENTETES, timeout=30).text
+            trouve = False
             for table in pd.read_html(io.StringIO(html)):
+                if isinstance(table.columns, pd.MultiIndex):
+                    table.columns = [" ".join(map(str, c)) for c in table.columns]
                 cols = {str(c).strip().lower(): c for c in table.columns}
-                col_ticker = cols.get("symbol") or cols.get("ticker")
-                col_nom = cols.get("security") or cols.get("company")
-                col_secteur = cols.get("gics sector")
-                if col_ticker is None or col_nom is None:
+
+                def chercher(*mots):
+                    for nom, c in cols.items():
+                        if any(m in nom for m in mots):
+                            return c
+                    return None
+
+                col_ticker = chercher("symbol", "ticker")
+                col_nom = chercher("security", "company")
+                col_secteur = chercher("gics sector")
+                if col_ticker is None or col_nom is None or len(table) < 90:
                     continue
+                trouve = True
                 t = pd.DataFrame({
                     "ticker": table[col_ticker].astype(str).str.strip(),
                     "nom": table[col_nom].astype(str).str.strip(),
@@ -85,9 +96,11 @@ def lire_univers(sortie: Path) -> pd.DataFrame:
                     if col_secteur is not None else "",
                     "indice": indice,
                 })
-                if len(t) >= 90:            # la bonne table, pas un encadré
-                    blocs.append(t)
-                    break
+                blocs.append(t)
+                print(f"  {indice} : {len(t)} titres")
+                break
+            if not trouve:
+                print(f"  ! Univers {indice} : aucune table de composants reconnue")
         except Exception as e:
             print(f"  ! Univers {indice} : lecture impossible ({e})")
 
