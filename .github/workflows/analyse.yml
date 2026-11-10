@@ -3,12 +3,15 @@ name: Analyse technique quotidienne
 # GitHub planifie en heure UTC, sans changement d'heure.
 # Deux créneaux par marché couvrent l'heure d'été et l'heure d'hiver ;
 # l'étape « Vérifier l'horaire » ne garde que ceux qui tombent après la clôture.
+# GitHub peut retarder les créneaux de plusieurs heures : une exécution qui part
+# dans la nuit (jusqu'à 9h00 Paris) traite la clôture américaine de la veille.
 on:
   schedule:
     - cron: "50 15 * * 1-5"   # 17h50 Paris en été  / 16h50 en hiver (ignoré)
     - cron: "50 16 * * 1-5"   # 18h50 Paris en été  / 17h50 en hiver
     - cron: "20 20 * * 1-5"   # 22h20 Paris en été  / 21h20 en hiver (ignoré)
     - cron: "20 21 * * 1-5"   # 23h20 Paris en été  / 22h20 en hiver
+    - cron: "30 4 * * 2-6"    # filet de sécurité : 6h30 Paris en été / 5h30 en hiver (séance de la veille)
   workflow_dispatch:          # bouton « Run workflow » pour lancer à la main
 
 permissions:
@@ -28,16 +31,23 @@ jobs:
         run: |
           H=$(TZ=Europe/Paris date +%H%M)
           echo "Heure de Paris : $H"
+          # Après la clôture US : le soir à partir de 22h05, ou la nuit jusqu'à 9h00
+          # (créneau du soir retardé par GitHub, ou filet de sécurité du matin).
+          if [ "$H" -ge 2205 ] || [ "$H" -le 0900 ]; then
+            APRES_US=true
+          else
+            APRES_US=false
+          fi
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] \
              || { [ "$H" -ge 1740 ] && [ "$H" -le 2030 ]; } \
-             || [ "$H" -ge 2205 ]; then
+             || [ "$APRES_US" = "true" ]; then
             echo "ok=true" >> "$GITHUB_OUTPUT"
           else
             echo "Créneau avant clôture : exécution ignorée."
             echo "ok=false" >> "$GITHUB_OUTPUT"
           fi
           # Scan large : seulement après la clôture américaine (ou lancement manuel)
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$H" -ge 2205 ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$APRES_US" = "true" ]; then
             echo "us=true" >> "$GITHUB_OUTPUT"
           else
             echo "us=false" >> "$GITHUB_OUTPUT"
