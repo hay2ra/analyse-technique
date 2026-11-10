@@ -48,8 +48,8 @@
   {
    "ticker": "IWM",
    "nom": "Russell 2000",
-   "cloture": 280.56,
-   "var_jour_pct": -0.69,
+   "cloture": 280.58,
+   "var_jour_pct": -0.68,
    "perf_1s": 0.3,
    "perf_1m": 1.0,
    "perf_3m": -7.1,
@@ -67,28 +67,28 @@
   {
    "ticker": "^VIX",
    "nom": "VIX",
-   "cloture": 19.48,
-   "var_jour_pct": -2.21,
-   "perf_1s": -6.5,
-   "perf_1m": 28.1,
-   "perf_3m": 33.2,
-   "recul_pct": -44.8,
+   "cloture": 19.46,
+   "var_jour_pct": -2.31,
+   "perf_1s": -6.6,
+   "perf_1m": 27.9,
+   "perf_3m": 33.0,
+   "recul_pct": -44.9,
    "au_dessus_ema20": false,
    "au_dessus_ema50": true,
    "au_dessus_ema200": true,
    "ema20": 19.53,
-   "ema50": 17.91,
+   "ema50": 17.9,
    "ema200": 17.64,
-   "rsi": 51.0
+   "rsi": 50.9
   },
   {
    "ticker": "XLK",
    "nom": "Technologie",
-   "cloture": 168.93,
-   "var_jour_pct": -1.14,
+   "cloture": 168.91,
+   "var_jour_pct": -1.15,
    "perf_1s": -4.3,
    "perf_1m": -14.0,
-   "perf_3m": -10.4,
+   "perf_3m": -10.5,
    "recul_pct": -16.9,
    "au_dessus_ema20": false,
    "au_dessus_ema50": false,
@@ -97,7 +97,7 @@
    "ema50": 184.26,
    "ema200": 172.64,
    "rsi": 36.3,
-   "rs_1m_vs_spy": -10.3,
+   "rs_1m_vs_spy": -10.4,
    "rs_3m_vs_spy": -7.8
   },
   {
@@ -179,9 +179,9 @@
   {
    "ticker": "XLV",
    "nom": "Santé",
-   "cloture": 188.91,
-   "var_jour_pct": 0.31,
-   "perf_1s": 2.7,
+   "cloture": 188.88,
+   "var_jour_pct": 0.29,
+   "perf_1s": 2.6,
    "perf_1m": 9.8,
    "perf_3m": 12.6,
    "recul_pct": -1.8,
@@ -192,8 +192,8 @@
    "ema50": 175.78,
    "ema200": 161.88,
    "rsi": 68.5,
-   "rs_1m_vs_spy": 13.5,
-   "rs_3m_vs_spy": 15.3
+   "rs_1m_vs_spy": 13.4,
+   "rs_3m_vs_spy": 15.2
   },
   {
    "ticker": "XLF",
@@ -310,5 +310,5 @@
    "rs_3m_vs_spy": 3.7
   }
  ],
- "genere_le": "2026-11-10T22:30:45+01:00"
+ "genere_le": "2026-11-10T23:02:38+01:00"
 }
