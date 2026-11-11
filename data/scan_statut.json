@@ -11,13 +11,13 @@
   "R2": 5,
   "R3": 84
  },
- "genere_le": "2026-11-10T23:02:38+01:00",
+ "genere_le": "2026-11-11T01:45:01+01:00",
  "derniere_seance": "2026-11-10",
  "nb_univers": 518,
  "nb_ok": 514,
  "nb_candidats": 146,
  "nb_candidats_resultats_connus": 146,
- "nb_candidats_resultats_proches": 5,
+ "nb_candidats_resultats_proches": 6,
  "echecs": [
   "FDXF",
   "HONA",
