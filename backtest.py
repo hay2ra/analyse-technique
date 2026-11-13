@@ -81,10 +81,23 @@ STOP_TEMPS, PROGRES_MIN_R = 10, 0.5
 DUREE_MAX = 20
 JOURS_RESULTATS_MIN = 7
 
-VARIANTES = ("V1", "V2", "V3")
+# Gestion « position » (v4) : horizon 1 à 3 mois
+T1P_R = 2.0                 # moitié vendue à +2R, stop au prix d'entrée
+STOP_TEMPS_P = 20           # sortie si moins de +0,5R après 20 séances
+DUREE_MAX_P = 60            # environ 3 mois
+
+# Setup « panique » (v4) : leaders sains achetés au rebond après une panique
+PANIQUE_SPY, PANIQUE_QQQ = -0.02, -0.025   # séance de panique du marché
+CHUTE_MIN = -0.08           # chute du titre sur 10 séances
+RISQUE_P, PLAFOND_LIGNE_P = 50.0, 600.0
+STOP_MAX_ATR_P = 3.0
+
+VARIANTES = ("V1", "V2", "V3", "V4", "V5")
 NOMS_VARIANTES = {"V1": "plan v3 (moitié à 1,5R, suiveur plus bas veille, 2,5R)",
                   "V2": "moitié à 1,5R puis clôture sous EMA10",
-                  "V3": "tout à 2R"}
+                  "V3": "tout à 2R",
+                  "V4": "position : moitié à 2R, reste tenu jusqu'à clôture sous EMA20, 60 séances max",
+                  "V5": "position avec stop sur clôture (au lieu d'en séance)"}
 
 # =============================================================================
 
@@ -135,7 +148,8 @@ def dates_resultats(tickers: list[str], cache: Path) -> dict[str, list[pd.Timest
 # -------------------------------------------------------------- indicateurs
 
 def preparer(df: pd.DataFrame, ref: pd.DataFrame,
-             correction: pd.Series | None = None) -> pd.DataFrame:
+             correction: pd.Series | None = None,
+             panique: pd.Series | None = None) -> pd.DataFrame:
     """Indicateurs et signaux, chaque valeur ne dépend que du passé."""
     df = sl.indicateurs(df.copy())
     df["EMA10"] = sl.ema(df["Close"], 10)
@@ -234,6 +248,19 @@ def preparer(df: pd.DataFrame, ref: pd.DataFrame,
     df["r2_large"] = r2_large
     df["stop_r2_large"] = stop_r2
     df["zone"] = zone
+
+    # Setup « panique » : une séance de panique du marché dans les 3 dernières
+    # séances, un titre en tendance avant la chute, tombé d'au moins 8 % en
+    # 10 séances, et une première séance de reprise franche.
+    pan = (panique.reindex(df.index).fillna(False).astype(bool)
+           if panique is not None else pd.Series(False, index=df.index))
+    pan_recente = pan.shift(1).rolling(3, min_periods=1).max().fillna(0).astype(bool)
+    tendance_avant = ((df["EMA50"] > df["EMA200"]).shift(5)).fillna(False).astype(bool)
+    chute = (pc / c.shift(1).rolling(10).max() - 1) <= CHUTE_MIN
+    reprise = (c > o) & (c > pc) & (c >= l + 0.5 * amp)
+    df["panique"] = (liquide & pan_recente & tendance_avant & chute & reprise
+                     & recul.between(-0.40, -0.10))
+    df["stop_panique"] = l.rolling(5).min() - 0.25 * atr
     return df
 
 
@@ -242,25 +269,32 @@ def preparer(df: pd.DataFrame, ref: pd.DataFrame,
 def sortir(a: dict, j: int, entree: float, stop0: float, n_act: int,
            variante: str, i_resultats: int | None) -> dict:
     """Déroule une position ouverte à la séance j. Renvoie le résultat."""
-    O, H, L, C, E10 = a["O"], a["H"], a["L"], a["C"], a["E10"]
+    O, H, L, C, E10, E20 = a["O"], a["H"], a["L"], a["C"], a["E10"], a["E20"]
     n = len(C)
     R = entree - stop0
-    t1, t2 = entree + T1_R * R, entree + T2_R * R
+    position = variante in ("V4", "V5")
+    stop_cloture = variante == "V5"
+    duree_max = DUREE_MAX_P if position else DUREE_MAX
+    stop_temps = STOP_TEMPS_P if position else STOP_TEMPS
+    t1 = entree + (T1P_R if position else T1_R) * R
+    t2 = entree + T2_R * R
     cible_unique = entree + TOUT_R * R
     stop, reste, pnl = stop0, n_act, 0.0
     t1_touche, i_t1, n_t1 = False, None, 0
     raison, k = "durée max", j
 
-    for k in range(j, min(n, j + DUREE_MAX)):
+    for k in range(j, min(n, j + duree_max)):
         jour = k - j + 1
         o = O[k] if k > j else entree
-        # 1. stop (prioritaire en cas de doute)
-        if k > j and O[k] <= stop:
+        # 1. stop (prioritaire en cas de doute) ; V5 : seulement sur clôture
+        if stop_cloture:
+            pass
+        elif k > j and O[k] <= stop:
             pnl += reste * (O[k] - entree)
             raison = "stop (gap)" if not t1_touche else "suiveur/BE"
             reste = 0
             break
-        if L[k] <= stop:
+        elif L[k] <= stop:
             pnl += reste * (stop - entree)
             raison = "stop" if not t1_touche else "suiveur/BE"
             reste = 0
@@ -282,11 +316,20 @@ def sortir(a: dict, j: int, entree: float, stop0: float, n_act: int,
                 if reste == 0:
                     raison = "T1"
                     break
-            if t1_touche and H[k] >= t2:
+            if not position and t1_touche and H[k] >= t2:
                 pnl += reste * (max(t2, o) - entree)
                 raison, reste = "T2", 0
                 break
         # 3. fin de séance
+        if stop_cloture and C[k] <= stop:
+            pnl += reste * (C[k] - entree)
+            raison = "stop (clôture)" if not t1_touche else "BE (clôture)"
+            reste = 0
+            break
+        if position and t1_touche and C[k] < E20[k]:
+            pnl += reste * (C[k] - entree)
+            raison, reste = "clôture < EMA20", 0
+            break
         if i_resultats is not None and k >= i_resultats:
             pnl += reste * (C[k] - entree)
             raison, reste = "veille résultats", 0
@@ -295,11 +338,11 @@ def sortir(a: dict, j: int, entree: float, stop0: float, n_act: int,
             pnl += reste * (C[k] - entree)
             raison, reste = "clôture < EMA10", 0
             break
-        if not t1_touche and jour >= STOP_TEMPS and C[k] < entree + PROGRES_MIN_R * R:
+        if not t1_touche and jour >= stop_temps and C[k] < entree + PROGRES_MIN_R * R:
             pnl += reste * (C[k] - entree)
             raison, reste = "stop temps", 0
             break
-        if jour >= DUREE_MAX:
+        if jour >= duree_max:
             pnl += reste * (C[k] - entree)
             raison, reste = "durée max", 0
             break
@@ -322,7 +365,7 @@ def simuler(ticker: str, df: pd.DataFrame, famille: str, debut: int,
     """Trades d'un titre pour une famille de signaux (une position à la fois)."""
     a = {"O": df["Open"].to_numpy(), "H": df["High"].to_numpy(),
          "L": df["Low"].to_numpy(), "C": df["Close"].to_numpy(),
-         "E10": df["EMA10"].to_numpy()}
+         "E10": df["EMA10"].to_numpy(), "E20": df["EMA20"].to_numpy()}
     atr = df["ATR"].to_numpy()
     dates = df.index
     if famille == "plan":
@@ -340,6 +383,11 @@ def simuler(ticker: str, df: pd.DataFrame, famille: str, debut: int,
         declencheur = (df["High"] + MARGE_ENTREE).to_numpy()
         stops = df["stop_r2_large"].to_numpy()
         setups = np.full(len(df), "R2 large", dtype=object)
+    elif famille == "panique":
+        signal = df["panique"].to_numpy()
+        declencheur = None
+        stops = df["stop_panique"].to_numpy()
+        setups = np.full(len(df), "Panique", dtype=object)
     else:                               # témoin « zone »
         signal = df["zone"].to_numpy()
         declencheur = stops = None
@@ -373,7 +421,24 @@ def simuler(ticker: str, df: pd.DataFrame, famille: str, debut: int,
                 i_sortie_res = int(futurs[0]) - 1
 
         # Ordre
-        if famille == "zone":
+        if famille == "panique":
+            # achat à l'ouverture suivante, stop sous le plus bas de la panique
+            j, entree = i + 1, a["O"][i + 1]
+            stop0 = stops[i]
+            risque = entree - stop0
+            if risque < STOP_MIN_ATR * atr[i]:
+                stop0 = entree - STOP_MIN_ATR * atr[i]
+                risque = entree - stop0
+            if risque > STOP_MAX_ATR_P * atr[i]:
+                compte["risque_trop_large"] += 1
+                i += 1
+                continue
+            n_act = min(math.floor(RISQUE_P / risque), math.floor(PLAFOND_LIGNE_P / entree))
+            if n_act < 2:
+                compte["trop_cher"] += 1
+                i += 1
+                continue
+        elif famille == "zone":
             j, entree = i + 1, a["O"][i + 1]
             stop0 = entree - STOP_TEMOIN_ATR * atr[i]
             budget = RISQUE
@@ -433,12 +498,18 @@ def simuler(ticker: str, df: pd.DataFrame, famille: str, debut: int,
             "resultats_connus": resultats is not None,
         }
         for v in VARIANTES:
+            rv = res[v]
+            trade[f"date_sortie_{v}"] = dates[rv["sortie_idx"]].date()
+            trade[f"date_t1_{v}"] = dates[rv["t1_idx"]].date() if rv["t1_idx"] is not None else None
+            trade[f"n_t1_{v}"] = rv["n_t1"]
+            trade[f"prix_t1_{v}"] = round(rv["prix_t1"], 2)
             trade[f"pnl_{v}"] = round(res[v]["pnl"], 2)
             trade[f"R_{v}"] = round(res[v]["R"], 3)
             trade[f"raison_{v}"] = res[v]["raison"]
             trade[f"duree_{v}"] = res[v]["duree"]
         trades.append(trade)
-        i = v1["sortie_idx"] + 1              # une position à la fois par titre
+        principale = res["V4"] if famille == "panique" else v1
+        i = principale["sortie_idx"] + 1      # une position à la fois par titre
     return trades, compte
 
 
@@ -485,39 +556,44 @@ def tableau(lignes: list[tuple[str, dict]], titre_col: str) -> str:
 
 def portefeuille(trades: pd.DataFrame, donnees: dict, regime: pd.Series,
                  secteurs: dict, debut: pd.Timestamp,
-                 famille: str = "plan") -> tuple[pd.DataFrame, dict]:
-    """Compte de 2 000 $ avec plafonds de risque, de secteur et de cash (V1)."""
-    t = trades[(trades["famille"] == famille)].copy()
+                 familles: tuple = ("plan",), v: str = "V1",
+                 plafonds: tuple = (PLAFOND_RISQUE, PLAFOND_RISQUE_CORRECTION),
+                 setups_exclus: tuple = ()) -> tuple[pd.DataFrame, dict]:
+    """Compte de 2 000 $ avec plafonds de risque, de secteur et de cash."""
+    t = trades[trades["famille"].isin(familles) & ~trades["setup"].isin(setups_exclus)].copy()
     t["date_entree"] = pd.to_datetime(t["date_entree"])
-    t["date_sortie"] = pd.to_datetime(t["date_sortie"])
-    t["date_t1"] = pd.to_datetime(t["date_t1"])
+    t["d_sortie"] = pd.to_datetime(t[f"date_sortie_{v}"])
+    t["d_t1"] = pd.to_datetime(t[f"date_t1_{v}"])
     t["secteur"] = t["ticker"].map(secteurs).fillna("?")
     jours = regime.index[regime.index >= debut]
     par_jour = {d: g.sort_values(["score", "rs3"], ascending=False)
                 for d, g in t.groupby("date_entree")}
 
-    realise, ouvertes, journal, refus = 0.0, [], [], {"risque": 0, "secteur": 0, "cash": 0}
+    realise, ouvertes, journal = 0.0, [], []
+    refus = {"risque": 0, "secteur": 0, "cash": 0, "deja_en_portefeuille": 0}
     pic, dd_max = CAPITAL, 0.0
     retenus = 0
     for d in jours:
-        # sorties du jour (les positions sorties libèrent risque et cash)
         restantes = []
         for p in ouvertes:
-            if p["date_sortie"] <= d:
-                realise += p["pnl_V1"]
+            if p["d_sortie"] <= d:
+                realise += p[f"pnl_{v}"]
             else:
                 restantes.append(p)
         ouvertes = restantes
 
         def risque_ouvert():
-            return sum(0 if (pd.notna(p["date_t1"]) and p["date_t1"] < d) else p["risque_usd"]
+            return sum(0 if (pd.notna(p["d_t1"]) and p["d_t1"] < d) else p["risque_usd"]
                        for p in ouvertes)
 
         def investi():
             return sum(p["investi"] for p in ouvertes)
 
-        plafond = PLAFOND_RISQUE_CORRECTION if regime.get(d, False) else PLAFOND_RISQUE
+        plafond = plafonds[1] if regime.get(d, False) else plafonds[0]
         for _, p in par_jour.get(d, pd.DataFrame()).iterrows():
+            if any(q["ticker"] == p["ticker"] for q in ouvertes):
+                refus["deja_en_portefeuille"] += 1
+                continue
             if risque_ouvert() + p["risque_usd"] > plafond:
                 refus["risque"] += 1
                 continue
@@ -530,14 +606,14 @@ def portefeuille(trades: pd.DataFrame, donnees: dict, regime: pd.Series,
             ouvertes.append(p.to_dict())
             retenus += 1
 
-        # valeur du compte en fin de séance
         latent = 0.0
         for p in ouvertes:
             c = donnees[p["ticker"]]["Close"].get(d, np.nan)
             if np.isnan(c):
                 continue
-            vendu = p["n_t1"] if (pd.notna(p["date_t1"]) and p["date_t1"] <= d) else 0
-            latent += vendu * (p["prix_t1"] - p["entree"]) + (p["actions"] - vendu) * (c - p["entree"])
+            vendu = p[f"n_t1_{v}"] if (pd.notna(p["d_t1"]) and p["d_t1"] <= d) else 0
+            latent += (vendu * (p[f"prix_t1_{v}"] - p["entree"])
+                       + (p["actions"] - vendu) * (c - p["entree"]))
         valeur = CAPITAL + realise + latent
         pic = max(pic, valeur)
         dd_max = min(dd_max, valeur / pic - 1)
@@ -545,8 +621,10 @@ def portefeuille(trades: pd.DataFrame, donnees: dict, regime: pd.Series,
                         "positions": len(ouvertes), "risque_ouvert": round(risque_ouvert(), 2)})
 
     j = pd.DataFrame(journal)
+    retenus_df = t  # pour information
     resume = {
         "trades_retenus": retenus,
+        "trades_par_mois": round(retenus / max(len(jours) / 21, 1), 1),
         "refus": refus,
         "valeur_finale": float(j["valeur"].iloc[-1]) if len(j) else CAPITAL,
         "perf_pct": round((j["valeur"].iloc[-1] / CAPITAL - 1) * 100, 1) if len(j) else 0,
@@ -593,6 +671,10 @@ def main():
     regime = ((spy["Close"] < sl.ema(spy["Close"], 50))
               | (qqq["Close"].reindex(spy.index).ffill()
                  < sl.ema(qqq["Close"], 50).reindex(spy.index).ffill()))
+    r_spy = spy["Close"].pct_change()
+    r_qqq = qqq["Close"].pct_change().reindex(spy.index)
+    panique = (r_spy <= PANIQUE_SPY) | (r_qqq <= PANIQUE_QQQ)
+    print(f"Séances de panique du marché : {int(panique.sum())}", flush=True)
     donnees = telecharger(tickers)
     print(f"{len(donnees)} titres téléchargés", flush=True)
 
@@ -606,7 +688,7 @@ def main():
     tous, comptes = [], {}
     for k, (t, df) in enumerate(donnees.items(), 1):
         try:
-            p = preparer(df, spy, regime)
+            p = preparer(df, spy, regime, panique)
         except Exception as e:
             print(f"  ! {t} : {e}")
             continue
@@ -614,7 +696,7 @@ def main():
         i0 = int(np.searchsorted(p.index.values, np.datetime64(debut)))
         i0 = max(i0, 252)
         reit = str(secteurs.get(t, "")).strip().lower() == "real estate"
-        for famille in ("plan", "plan31", "r2_large", "zone"):
+        for famille in ("plan", "plan31", "r2_large", "zone", "panique"):
             if famille == "plan31" and reit:
                 continue
             tr, cpt = simuler(t, p, famille, i0, resultats.get(t))
@@ -657,6 +739,7 @@ def main():
                ("v3.1 R2 (sans tendance)", p31 & (trades["setup"] == "R2")),
                ("v3.1 R3 (en correction)", p31 & (trades["setup"] == "R3")),
                ("**v3.1 total (sans REIT)**", p31),
+               ("**Panique (leaders au rebond)**", trades["famille"] == "panique"),
                ("Témoin R2 large", trades["famille"] == "r2_large"),
                ("Témoin Zone sans setup", trades["famille"] == "zone")]
     resume["par_setup"] = {}
@@ -697,25 +780,29 @@ def main():
                   f"{c['trop_cher']} | {c['non_execute']} | {c['execute']} |\n")
 
     # ---- portefeuille
-    for fam, nom_p, deb_p in (("plan", f"{ANNEES_TEST} ans", debut),
-                              ("plan", f"{ANNEES_RECENT} ans", debut_recent),
-                              ("plan31", f"{ANNEES_TEST} ans v3.1", debut),
-                              ("plan31", f"{ANNEES_RECENT} ans v3.1", debut_recent)):
-        j, rp = portefeuille(trades[pd.to_datetime(trades["date_entree"]) >= deb_p],
-                             donnees, regime, secteurs, deb_p, fam)
-        spy_p = spy["Close"][spy.index >= deb_p]
-        rp["spy_perf_pct"] = round((spy_p.iloc[-1] / spy_p.iloc[0] - 1) * 100, 1)
-        spy_dd = (spy_p / spy_p.cummax() - 1).min()
-        rp["spy_drawdown_max_pct"] = round(spy_dd * 100, 1)
-        resume[f"portefeuille_{nom_p.replace(' ', '_')}"] = rp
-        j.to_csv(sortie / f"portefeuille_{nom_p.replace(' ', '_')}.csv", index=False)
-        md.append(f"\n## Compte de 2 000 $ simulé sur {nom_p} (sorties V1, plafonds de risque et de secteur)\n")
-        md.append(f"- Valeur finale : **{rp['valeur_finale']:.0f} $** ({rp['perf_pct']:+.1f} %), "
-                  f"drawdown max {rp['drawdown_max_pct']} %\n")
-        md.append(f"- SPY sur la même période : {rp['spy_perf_pct']:+.1f} %, drawdown max {rp['spy_drawdown_max_pct']} %\n")
-        md.append(f"- Trades retenus : {rp['trades_retenus']} ; refusés faute de budget de risque "
-                  f"{rp['refus']['risque']}, de place dans le secteur {rp['refus']['secteur']}, "
-                  f"de cash {rp['refus']['cash']} ; positions ouvertes en moyenne {rp['positions_moy']}\n")
+    scenarios = [
+        ("v3.1 actuelle (sorties V1)", ("plan31",), "V1", (PLAFOND_RISQUE, PLAFOND_RISQUE_CORRECTION)),
+        ("v3.1 avec gestion position (V4)", ("plan31",), "V4", (PLAFOND_RISQUE, PLAFOND_RISQUE_CORRECTION)),
+        ("Panique seule (V4)", ("panique",), "V4", (150.0, 150.0)),
+        ("Panique seule, stop sur clôture (V5)", ("panique",), "V5", (150.0, 150.0)),
+        ("v4 : panique + v3.1 (V4)", ("panique", "plan31"), "V4", (150.0, 150.0)),
+        ("v4 : panique + v3.1, stop sur clôture (V5)", ("panique", "plan31"), "V5", (150.0, 150.0)),
+    ]
+    md.append("\n## Compte de 2 000 $ simulé (plafonds de risque, 2 lignes par secteur, cash)\n")
+    md.append("| Scénario | Période | Valeur finale | Perf. | Drawdown max | Trades/mois | Positions moy. | SPY |\n")
+    md.append("|---|---|---|---|---|---|---|---|\n")
+    resume["portefeuilles"] = {}
+    for nom, fams, v, plaf in scenarios:
+        for nom_p, deb_p in ((f"{ANNEES_TEST} ans", debut), (f"{ANNEES_RECENT} ans", debut_recent)):
+            j, rp = portefeuille(trades[pd.to_datetime(trades["date_entree"]) >= deb_p],
+                                 donnees, regime, secteurs, deb_p, fams, v, plaf)
+            spy_p = spy["Close"][spy.index >= deb_p]
+            rp["spy_perf_pct"] = round((spy_p.iloc[-1] / spy_p.iloc[0] - 1) * 100, 1)
+            rp["spy_drawdown_max_pct"] = round((spy_p / spy_p.cummax() - 1).min() * 100, 1)
+            resume["portefeuilles"][f"{nom} — {nom_p}"] = rp
+            md.append(f"| {nom} | {nom_p} | {rp['valeur_finale']:.0f} $ | {rp['perf_pct']:+.1f} % | "
+                      f"{rp['drawdown_max_pct']} % | {rp['trades_par_mois']} | {rp['positions_moy']} | "
+                      f"{rp['spy_perf_pct']:+.1f} % (dd {rp['spy_drawdown_max_pct']} %) |\n")
 
     md.append("\n## Limites\n- Univers actuel des indices : biais du survivant, plutôt favorable.\n"
               "- Pas de filtre sur la cause de la baisse (fondamental) : en réel, une partie des pertes serait évitée, "
