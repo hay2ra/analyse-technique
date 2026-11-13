@@ -1,43 +1,51 @@
 {
- "genere_le": "2026-11-10T14:40:59+01:00",
+ "genere_le": "2026-11-13T15:16:33+01:00",
  "periode": [
-  "2021-11-09",
-  "2026-11-09"
+  "2021-11-12",
+  "2026-11-12"
  ],
  "nb_titres": 514,
  "nb_titres_dates_resultats": 514,
  "comptes_signaux": {
   "plan": {
-   "signaux": 13006,
-   "risque_trop_large": 216,
-   "trop_cher": 5368,
-   "resultats": 1622,
-   "non_execute": 2491,
-   "execute": 3309
+   "signaux": 13028,
+   "risque_trop_large": 218,
+   "trop_cher": 5362,
+   "resultats": 1647,
+   "non_execute": 2500,
+   "execute": 3301
   },
   "plan31": {
-   "signaux": 8361,
-   "risque_trop_large": 645,
+   "signaux": 8386,
+   "risque_trop_large": 648,
    "trop_cher": 2606,
-   "resultats": 1145,
-   "non_execute": 1443,
-   "execute": 2522
+   "resultats": 1164,
+   "non_execute": 1449,
+   "execute": 2519
   },
   "r2_large": {
-   "signaux": 2980,
-   "risque_trop_large": 615,
+   "signaux": 2989,
+   "risque_trop_large": 618,
    "trop_cher": 403,
-   "resultats": 313,
-   "non_execute": 384,
-   "execute": 1265
+   "resultats": 321,
+   "non_execute": 386,
+   "execute": 1261
   },
   "zone": {
-   "signaux": 22641,
+   "signaux": 22729,
    "risque_trop_large": 0,
-   "trop_cher": 8577,
-   "resultats": 4405,
+   "trop_cher": 8611,
+   "resultats": 4446,
    "non_execute": 0,
-   "execute": 9659
+   "execute": 9672
+  },
+  "panique": {
+   "signaux": 2263,
+   "risque_trop_large": 31,
+   "trop_cher": 268,
+   "resultats": 393,
+   "non_execute": 0,
+   "execute": 1571
   }
  },
  "parametres": {
@@ -52,28 +60,28 @@
   "V1": {
    "R1": {
     "tout": {
-     "trades": 1784,
-     "gagnants_pct": 45.7,
-     "R_moyen": 0.109,
-     "R_median": -0.378,
+     "trades": 1777,
+     "gagnants_pct": 45.6,
+     "R_moyen": 0.11,
+     "R_median": -0.358,
      "R_moyen_gain": 1.36,
      "R_moyen_perte": -0.94,
      "profit_factor": 1.22,
-     "pnl_total_usd": 3369.0,
-     "pnl_moyen_usd": 1.89,
+     "pnl_total_usd": 3385.0,
+     "pnl_moyen_usd": 1.91,
      "duree_moy": 6.4,
      "pire_serie_pertes": 11
     },
     "recent": {
-     "trades": 727,
-     "gagnants_pct": 47.0,
-     "R_moyen": 0.161,
-     "R_median": -0.247,
+     "trades": 728,
+     "gagnants_pct": 47.1,
+     "R_moyen": 0.163,
+     "R_median": -0.242,
      "R_moyen_gain": 1.41,
      "R_moyen_perte": -0.95,
      "profit_factor": 1.4,
-     "pnl_total_usd": 2495.0,
-     "pnl_moyen_usd": 3.43,
+     "pnl_total_usd": 2522.0,
+     "pnl_moyen_usd": 3.46,
      "duree_moy": 6.2,
      "pire_serie_pertes": 11
     }
@@ -88,7 +96,7 @@
      "R_moyen_perte": -0.82,
      "profit_factor": 1.49,
      "pnl_total_usd": 153.0,
-     "pnl_moyen_usd": 3.07,
+     "pnl_moyen_usd": 3.06,
      "duree_moy": 7.9,
      "pire_serie_pertes": 4
     },
@@ -108,225 +116,253 @@
    },
    "R3 (demi-taille)": {
     "tout": {
-     "trades": 1475,
-     "gagnants_pct": 49.8,
-     "R_moyen": 0.097,
-     "R_median": -0.007,
+     "trades": 1474,
+     "gagnants_pct": 49.9,
+     "R_moyen": 0.1,
+     "R_median": -0.005,
      "R_moyen_gain": 1.0,
      "R_moyen_perte": -0.8,
-     "profit_factor": 1.25,
-     "pnl_total_usd": 1990.0,
-     "pnl_moyen_usd": 1.35,
+     "profit_factor": 1.26,
+     "pnl_total_usd": 2046.0,
+     "pnl_moyen_usd": 1.39,
      "duree_moy": 8.6,
      "pire_serie_pertes": 13
     },
     "recent": {
-     "trades": 558,
-     "gagnants_pct": 46.1,
-     "R_moyen": 0.072,
+     "trades": 559,
+     "gagnants_pct": 46.2,
+     "R_moyen": 0.075,
      "R_median": -0.144,
      "R_moyen_gain": 1.09,
      "R_moyen_perte": -0.8,
-     "profit_factor": 1.18,
-     "pnl_total_usd": 572.0,
-     "pnl_moyen_usd": 1.03,
+     "profit_factor": 1.19,
+     "pnl_total_usd": 600.0,
+     "pnl_moyen_usd": 1.07,
      "duree_moy": 8.3,
      "pire_serie_pertes": 9
     }
    },
    "**R1+R2+R3 (v3)**": {
     "tout": {
-     "trades": 3309,
+     "trades": 3301,
      "gagnants_pct": 47.7,
-     "R_moyen": 0.104,
-     "R_median": -0.137,
+     "R_moyen": 0.106,
+     "R_median": -0.131,
      "R_moyen_gain": 1.18,
      "R_moyen_perte": -0.88,
-     "profit_factor": 1.23,
-     "pnl_total_usd": 5512.0,
-     "pnl_moyen_usd": 1.67,
+     "profit_factor": 1.24,
+     "pnl_total_usd": 5584.0,
+     "pnl_moyen_usd": 1.69,
      "duree_moy": 7.4,
      "pire_serie_pertes": 9
     },
     "recent": {
-     "trades": 1308,
+     "trades": 1310,
      "gagnants_pct": 46.6,
-     "R_moyen": 0.116,
-     "R_median": -0.192,
+     "R_moyen": 0.119,
+     "R_median": -0.184,
      "R_moyen_gain": 1.26,
      "R_moyen_perte": -0.88,
      "profit_factor": 1.31,
-     "pnl_total_usd": 3004.0,
-     "pnl_moyen_usd": 2.3,
+     "pnl_total_usd": 3059.0,
+     "pnl_moyen_usd": 2.34,
      "duree_moy": 7.1,
      "pire_serie_pertes": 10
     }
    },
    "v3.1 R1 (recul ≥ 15 %)": {
     "tout": {
-     "trades": 701,
-     "gagnants_pct": 47.5,
-     "R_moyen": 0.161,
-     "R_median": -0.24,
+     "trades": 700,
+     "gagnants_pct": 47.4,
+     "R_moyen": 0.159,
+     "R_median": -0.248,
      "R_moyen_gain": 1.37,
-     "R_moyen_perte": -0.93,
-     "profit_factor": 1.38,
-     "pnl_total_usd": 2293.0,
-     "pnl_moyen_usd": 3.27,
+     "R_moyen_perte": -0.94,
+     "profit_factor": 1.37,
+     "pnl_total_usd": 2278.0,
+     "pnl_moyen_usd": 3.25,
      "duree_moy": 6.3,
      "pire_serie_pertes": 9
     },
     "recent": {
      "trades": 310,
      "gagnants_pct": 50.0,
-     "R_moyen": 0.243,
+     "R_moyen": 0.244,
      "R_median": -0.02,
      "R_moyen_gain": 1.44,
      "R_moyen_perte": -0.96,
      "profit_factor": 1.61,
-     "pnl_total_usd": 1672.0,
-     "pnl_moyen_usd": 5.39,
+     "pnl_total_usd": 1679.0,
+     "pnl_moyen_usd": 5.42,
      "duree_moy": 6.0,
      "pire_serie_pertes": 9
     }
    },
    "v3.1 R2 (sans tendance)": {
     "tout": {
-     "trades": 1131,
+     "trades": 1128,
      "gagnants_pct": 49.5,
-     "R_moyen": 0.135,
-     "R_median": -0.013,
+     "R_moyen": 0.134,
+     "R_median": -0.014,
      "R_moyen_gain": 1.13,
      "R_moyen_perte": -0.84,
      "profit_factor": 1.32,
-     "pnl_total_usd": 2495.0,
-     "pnl_moyen_usd": 2.21,
+     "pnl_total_usd": 2485.0,
+     "pnl_moyen_usd": 2.2,
      "duree_moy": 7.6,
      "pire_serie_pertes": 8
     },
     "recent": {
-     "trades": 453,
-     "gagnants_pct": 48.6,
-     "R_moyen": 0.068,
-     "R_median": -0.042,
-     "R_moyen_gain": 1.06,
+     "trades": 452,
+     "gagnants_pct": 48.5,
+     "R_moyen": 0.067,
+     "R_median": -0.045,
+     "R_moyen_gain": 1.05,
      "R_moyen_perte": -0.86,
      "profit_factor": 1.17,
-     "pnl_total_usd": 539.0,
-     "pnl_moyen_usd": 1.19,
-     "duree_moy": 7.5,
+     "pnl_total_usd": 535.0,
+     "pnl_moyen_usd": 1.18,
+     "duree_moy": 7.4,
      "pire_serie_pertes": 9
     }
    },
    "v3.1 R3 (en correction)": {
     "tout": {
-     "trades": 690,
-     "gagnants_pct": 54.5,
-     "R_moyen": 0.167,
-     "R_median": 0.168,
+     "trades": 691,
+     "gagnants_pct": 54.6,
+     "R_moyen": 0.17,
+     "R_median": 0.17,
      "R_moyen_gain": 1.0,
      "R_moyen_perte": -0.83,
-     "profit_factor": 1.45,
-     "pnl_total_usd": 1595.0,
-     "pnl_moyen_usd": 2.31,
+     "profit_factor": 1.46,
+     "pnl_total_usd": 1624.0,
+     "pnl_moyen_usd": 2.35,
      "duree_moy": 8.8,
      "pire_serie_pertes": 7
     },
     "recent": {
-     "trades": 214,
-     "gagnants_pct": 52.3,
-     "R_moyen": 0.155,
-     "R_median": 0.145,
-     "R_moyen_gain": 1.07,
+     "trades": 215,
+     "gagnants_pct": 52.6,
+     "R_moyen": 0.163,
+     "R_median": 0.15,
+     "R_moyen_gain": 1.08,
      "R_moyen_perte": -0.85,
-     "profit_factor": 1.39,
-     "pnl_total_usd": 452.0,
-     "pnl_moyen_usd": 2.11,
-     "duree_moy": 8.4,
+     "profit_factor": 1.41,
+     "pnl_total_usd": 480.0,
+     "pnl_moyen_usd": 2.23,
+     "duree_moy": 8.3,
      "pire_serie_pertes": 6
     }
    },
    "**v3.1 total (sans REIT)**": {
     "tout": {
-     "trades": 2522,
+     "trades": 2519,
      "gagnants_pct": 50.3,
      "R_moyen": 0.151,
-     "R_median": 0.02,
+     "R_median": 0.017,
      "R_moyen_gain": 1.16,
      "R_moyen_perte": -0.87,
      "profit_factor": 1.37,
-     "pnl_total_usd": 6384.0,
-     "pnl_moyen_usd": 2.53,
+     "pnl_total_usd": 6388.0,
+     "pnl_moyen_usd": 2.54,
      "duree_moy": 7.6,
      "pire_serie_pertes": 10
     },
     "recent": {
      "trades": 977,
      "gagnants_pct": 49.8,
-     "R_moyen": 0.143,
+     "R_moyen": 0.144,
      "R_median": -0.004,
      "R_moyen_gain": 1.18,
      "R_moyen_perte": -0.89,
-     "profit_factor": 1.37,
-     "pnl_total_usd": 2663.0,
-     "pnl_moyen_usd": 2.73,
+     "profit_factor": 1.38,
+     "pnl_total_usd": 2695.0,
+     "pnl_moyen_usd": 2.76,
      "duree_moy": 7.2,
      "pire_serie_pertes": 10
     }
    },
+   "**Panique (leaders au rebond)**": {
+    "tout": {
+     "trades": 1571,
+     "gagnants_pct": 52.6,
+     "R_moyen": 0.11,
+     "R_median": 0.068,
+     "R_moyen_gain": 1.02,
+     "R_moyen_perte": -0.9,
+     "profit_factor": 1.27,
+     "pnl_total_usd": 5108.0,
+     "pnl_moyen_usd": 3.25,
+     "duree_moy": 7.4,
+     "pire_serie_pertes": 11
+    },
+    "recent": {
+     "trades": 551,
+     "gagnants_pct": 55.0,
+     "R_moyen": 0.049,
+     "R_median": 0.101,
+     "R_moyen_gain": 0.8,
+     "R_moyen_perte": -0.86,
+     "profit_factor": 1.14,
+     "pnl_total_usd": 857.0,
+     "pnl_moyen_usd": 1.56,
+     "duree_moy": 7.5,
+     "pire_serie_pertes": 6
+    }
+   },
    "Témoin R2 large": {
     "tout": {
-     "trades": 1265,
+     "trades": 1261,
      "gagnants_pct": 49.5,
      "R_moyen": 0.135,
      "R_median": -0.015,
      "R_moyen_gain": 1.13,
      "R_moyen_perte": -0.84,
      "profit_factor": 1.31,
-     "pnl_total_usd": 2729.0,
-     "pnl_moyen_usd": 2.16,
+     "pnl_total_usd": 2732.0,
+     "pnl_moyen_usd": 2.17,
      "duree_moy": 7.6,
      "pire_serie_pertes": 11
     },
     "recent": {
-     "trades": 519,
+     "trades": 517,
      "gagnants_pct": 48.7,
-     "R_moyen": 0.077,
+     "R_moyen": 0.079,
      "R_median": -0.027,
      "R_moyen_gain": 1.06,
      "R_moyen_perte": -0.86,
-     "profit_factor": 1.18,
-     "pnl_total_usd": 664.0,
-     "pnl_moyen_usd": 1.28,
+     "profit_factor": 1.19,
+     "pnl_total_usd": 675.0,
+     "pnl_moyen_usd": 1.31,
      "duree_moy": 7.5,
      "pire_serie_pertes": 9
     }
    },
    "Témoin Zone sans setup": {
     "tout": {
-     "trades": 9659,
+     "trades": 9672,
      "gagnants_pct": 46.5,
      "R_moyen": 0.054,
-     "R_median": -0.19,
+     "R_median": -0.191,
      "R_moyen_gain": 1.14,
      "R_moyen_perte": -0.89,
      "profit_factor": 1.12,
-     "pnl_total_usd": 11192.0,
+     "pnl_total_usd": 11257.0,
      "pnl_moyen_usd": 1.16,
      "duree_moy": 7.3,
      "pire_serie_pertes": 13
     },
     "recent": {
-     "trades": 3841,
+     "trades": 3870,
      "gagnants_pct": 47.4,
-     "R_moyen": 0.079,
+     "R_moyen": 0.078,
      "R_median": -0.122,
      "R_moyen_gain": 1.14,
      "R_moyen_perte": -0.88,
      "profit_factor": 1.19,
-     "pnl_total_usd": 6813.0,
-     "pnl_moyen_usd": 1.77,
-     "duree_moy": 7.4,
+     "pnl_total_usd": 6816.0,
+     "pnl_moyen_usd": 1.76,
+     "duree_moy": 7.3,
      "pire_serie_pertes": 12
     }
    }
@@ -334,28 +370,28 @@
   "V2": {
    "R1": {
     "tout": {
-     "trades": 1784,
-     "gagnants_pct": 45.6,
-     "R_moyen": 0.11,
-     "R_median": -0.392,
+     "trades": 1777,
+     "gagnants_pct": 45.5,
+     "R_moyen": 0.111,
+     "R_median": -0.365,
      "R_moyen_gain": 1.36,
      "R_moyen_perte": -0.94,
      "profit_factor": 1.22,
-     "pnl_total_usd": 3377.0,
-     "pnl_moyen_usd": 1.89,
+     "pnl_total_usd": 3403.0,
+     "pnl_moyen_usd": 1.92,
      "duree_moy": 6.9,
      "pire_serie_pertes": 11
     },
     "recent": {
-     "trades": 727,
-     "gagnants_pct": 47.0,
-     "R_moyen": 0.166,
-     "R_median": -0.247,
+     "trades": 728,
+     "gagnants_pct": 47.1,
+     "R_moyen": 0.168,
+     "R_median": -0.242,
      "R_moyen_gain": 1.42,
      "R_moyen_perte": -0.95,
-     "profit_factor": 1.41,
-     "pnl_total_usd": 2596.0,
-     "pnl_moyen_usd": 3.57,
+     "profit_factor": 1.42,
+     "pnl_total_usd": 2626.0,
+     "pnl_moyen_usd": 3.61,
      "duree_moy": 6.8,
      "pire_serie_pertes": 11
     }
@@ -370,7 +406,7 @@
      "R_moyen_perte": -0.82,
      "profit_factor": 1.37,
      "pnl_total_usd": 115.0,
-     "pnl_moyen_usd": 2.3,
+     "pnl_moyen_usd": 2.29,
      "duree_moy": 8.3,
      "pire_serie_pertes": 4
     },
@@ -381,7 +417,7 @@
      "R_median": -0.401,
      "R_moyen_gain": 0.68,
      "R_moyen_perte": -0.87,
-     "profit_factor": 0.65,
+     "profit_factor": 0.64,
      "pnl_total_usd": -73.0,
      "pnl_moyen_usd": -3.19,
      "duree_moy": 8.0,
@@ -390,224 +426,252 @@
    },
    "R3 (demi-taille)": {
     "tout": {
-     "trades": 1475,
-     "gagnants_pct": 49.8,
-     "R_moyen": 0.101,
-     "R_median": -0.007,
+     "trades": 1474,
+     "gagnants_pct": 49.9,
+     "R_moyen": 0.104,
+     "R_median": -0.005,
      "R_moyen_gain": 1.01,
      "R_moyen_perte": -0.8,
      "profit_factor": 1.26,
-     "pnl_total_usd": 2047.0,
-     "pnl_moyen_usd": 1.39,
+     "pnl_total_usd": 2103.0,
+     "pnl_moyen_usd": 1.43,
      "duree_moy": 9.3,
      "pire_serie_pertes": 13
     },
     "recent": {
-     "trades": 558,
-     "gagnants_pct": 46.1,
-     "R_moyen": 0.067,
+     "trades": 559,
+     "gagnants_pct": 46.2,
+     "R_moyen": 0.071,
      "R_median": -0.144,
      "R_moyen_gain": 1.08,
      "R_moyen_perte": -0.8,
-     "profit_factor": 1.16,
-     "pnl_total_usd": 529.0,
-     "pnl_moyen_usd": 0.95,
+     "profit_factor": 1.17,
+     "pnl_total_usd": 557.0,
+     "pnl_moyen_usd": 1.0,
      "duree_moy": 8.9,
      "pire_serie_pertes": 9
     }
    },
    "**R1+R2+R3 (v3)**": {
     "tout": {
-     "trades": 3309,
+     "trades": 3301,
      "gagnants_pct": 47.6,
-     "R_moyen": 0.105,
-     "R_median": -0.139,
+     "R_moyen": 0.107,
+     "R_median": -0.135,
      "R_moyen_gain": 1.19,
      "R_moyen_perte": -0.88,
      "profit_factor": 1.24,
-     "pnl_total_usd": 5539.0,
-     "pnl_moyen_usd": 1.67,
+     "pnl_total_usd": 5621.0,
+     "pnl_moyen_usd": 1.7,
      "duree_moy": 8.0,
      "pire_serie_pertes": 9
     },
     "recent": {
-     "trades": 1308,
+     "trades": 1310,
      "gagnants_pct": 46.6,
-     "R_moyen": 0.117,
-     "R_median": -0.192,
-     "R_moyen_gain": 1.26,
+     "R_moyen": 0.12,
+     "R_median": -0.184,
+     "R_moyen_gain": 1.27,
      "R_moyen_perte": -0.88,
-     "profit_factor": 1.31,
-     "pnl_total_usd": 3052.0,
-     "pnl_moyen_usd": 2.33,
+     "profit_factor": 1.32,
+     "pnl_total_usd": 3109.0,
+     "pnl_moyen_usd": 2.37,
      "duree_moy": 7.7,
      "pire_serie_pertes": 10
     }
    },
    "v3.1 R1 (recul ≥ 15 %)": {
     "tout": {
-     "trades": 701,
-     "gagnants_pct": 47.5,
-     "R_moyen": 0.179,
-     "R_median": -0.24,
+     "trades": 700,
+     "gagnants_pct": 47.4,
+     "R_moyen": 0.178,
+     "R_median": -0.248,
      "R_moyen_gain": 1.41,
-     "R_moyen_perte": -0.93,
+     "R_moyen_perte": -0.94,
      "profit_factor": 1.42,
-     "pnl_total_usd": 2545.0,
-     "pnl_moyen_usd": 3.63,
+     "pnl_total_usd": 2537.0,
+     "pnl_moyen_usd": 3.62,
      "duree_moy": 6.9,
      "pire_serie_pertes": 9
     },
     "recent": {
      "trades": 310,
      "gagnants_pct": 50.0,
-     "R_moyen": 0.257,
+     "R_moyen": 0.258,
      "R_median": -0.02,
      "R_moyen_gain": 1.47,
      "R_moyen_perte": -0.96,
-     "profit_factor": 1.65,
-     "pnl_total_usd": 1802.0,
-     "pnl_moyen_usd": 5.81,
+     "profit_factor": 1.66,
+     "pnl_total_usd": 1817.0,
+     "pnl_moyen_usd": 5.86,
      "duree_moy": 6.6,
      "pire_serie_pertes": 9
     }
    },
    "v3.1 R2 (sans tendance)": {
     "tout": {
-     "trades": 1131,
+     "trades": 1128,
      "gagnants_pct": 49.5,
      "R_moyen": 0.147,
-     "R_median": -0.013,
+     "R_median": -0.014,
      "R_moyen_gain": 1.16,
      "R_moyen_perte": -0.84,
      "profit_factor": 1.34,
-     "pnl_total_usd": 2693.0,
+     "pnl_total_usd": 2689.0,
      "pnl_moyen_usd": 2.38,
      "duree_moy": 8.1,
      "pire_serie_pertes": 8
     },
     "recent": {
-     "trades": 453,
-     "gagnants_pct": 48.6,
+     "trades": 452,
+     "gagnants_pct": 48.5,
      "R_moyen": 0.09,
-     "R_median": -0.042,
+     "R_median": -0.045,
      "R_moyen_gain": 1.1,
      "R_moyen_perte": -0.86,
      "profit_factor": 1.22,
-     "pnl_total_usd": 711.0,
-     "pnl_moyen_usd": 1.57,
+     "pnl_total_usd": 712.0,
+     "pnl_moyen_usd": 1.58,
      "duree_moy": 8.0,
      "pire_serie_pertes": 9
     }
    },
    "v3.1 R3 (en correction)": {
     "tout": {
-     "trades": 690,
-     "gagnants_pct": 54.5,
-     "R_moyen": 0.172,
-     "R_median": 0.168,
+     "trades": 691,
+     "gagnants_pct": 54.6,
+     "R_moyen": 0.175,
+     "R_median": 0.17,
      "R_moyen_gain": 1.01,
      "R_moyen_perte": -0.83,
      "profit_factor": 1.47,
-     "pnl_total_usd": 1644.0,
-     "pnl_moyen_usd": 2.38,
+     "pnl_total_usd": 1672.0,
+     "pnl_moyen_usd": 2.42,
      "duree_moy": 9.5,
      "pire_serie_pertes": 7
     },
     "recent": {
-     "trades": 214,
-     "gagnants_pct": 52.3,
-     "R_moyen": 0.145,
-     "R_median": 0.145,
-     "R_moyen_gain": 1.05,
+     "trades": 215,
+     "gagnants_pct": 52.6,
+     "R_moyen": 0.153,
+     "R_median": 0.15,
+     "R_moyen_gain": 1.06,
      "R_moyen_perte": -0.85,
-     "profit_factor": 1.36,
-     "pnl_total_usd": 419.0,
-     "pnl_moyen_usd": 1.96,
+     "profit_factor": 1.38,
+     "pnl_total_usd": 448.0,
+     "pnl_moyen_usd": 2.08,
      "duree_moy": 9.0,
      "pire_serie_pertes": 6
     }
    },
    "**v3.1 total (sans REIT)**": {
     "tout": {
-     "trades": 2522,
+     "trades": 2519,
      "gagnants_pct": 50.3,
      "R_moyen": 0.163,
-     "R_median": 0.02,
+     "R_median": 0.017,
      "R_moyen_gain": 1.18,
      "R_moyen_perte": -0.87,
-     "profit_factor": 1.39,
-     "pnl_total_usd": 6882.0,
-     "pnl_moyen_usd": 2.73,
+     "profit_factor": 1.4,
+     "pnl_total_usd": 6898.0,
+     "pnl_moyen_usd": 2.74,
      "duree_moy": 8.2,
      "pire_serie_pertes": 10
     },
     "recent": {
      "trades": 977,
      "gagnants_pct": 49.8,
-     "R_moyen": 0.155,
+     "R_moyen": 0.157,
      "R_median": -0.004,
      "R_moyen_gain": 1.21,
      "R_moyen_perte": -0.89,
-     "profit_factor": 1.41,
-     "pnl_total_usd": 2933.0,
-     "pnl_moyen_usd": 3.0,
+     "profit_factor": 1.42,
+     "pnl_total_usd": 2977.0,
+     "pnl_moyen_usd": 3.05,
      "duree_moy": 7.8,
      "pire_serie_pertes": 10
     }
    },
+   "**Panique (leaders au rebond)**": {
+    "tout": {
+     "trades": 1571,
+     "gagnants_pct": 52.6,
+     "R_moyen": 0.109,
+     "R_median": 0.068,
+     "R_moyen_gain": 1.02,
+     "R_moyen_perte": -0.9,
+     "profit_factor": 1.27,
+     "pnl_total_usd": 5040.0,
+     "pnl_moyen_usd": 3.21,
+     "duree_moy": 7.8,
+     "pire_serie_pertes": 11
+    },
+    "recent": {
+     "trades": 551,
+     "gagnants_pct": 55.0,
+     "R_moyen": 0.044,
+     "R_median": 0.101,
+     "R_moyen_gain": 0.79,
+     "R_moyen_perte": -0.86,
+     "profit_factor": 1.13,
+     "pnl_total_usd": 772.0,
+     "pnl_moyen_usd": 1.4,
+     "duree_moy": 7.7,
+     "pire_serie_pertes": 6
+    }
+   },
    "Témoin R2 large": {
     "tout": {
-     "trades": 1265,
+     "trades": 1261,
      "gagnants_pct": 49.5,
      "R_moyen": 0.144,
      "R_median": -0.015,
      "R_moyen_gain": 1.15,
      "R_moyen_perte": -0.84,
      "profit_factor": 1.33,
-     "pnl_total_usd": 2895.0,
-     "pnl_moyen_usd": 2.29,
+     "pnl_total_usd": 2905.0,
+     "pnl_moyen_usd": 2.3,
      "duree_moy": 8.1,
      "pire_serie_pertes": 11
     },
     "recent": {
-     "trades": 519,
+     "trades": 517,
      "gagnants_pct": 48.7,
-     "R_moyen": 0.097,
+     "R_moyen": 0.099,
      "R_median": -0.027,
      "R_moyen_gain": 1.11,
      "R_moyen_perte": -0.86,
-     "profit_factor": 1.23,
-     "pnl_total_usd": 841.0,
-     "pnl_moyen_usd": 1.62,
+     "profit_factor": 1.24,
+     "pnl_total_usd": 857.0,
+     "pnl_moyen_usd": 1.66,
      "duree_moy": 8.0,
      "pire_serie_pertes": 9
     }
    },
    "Témoin Zone sans setup": {
     "tout": {
-     "trades": 9659,
+     "trades": 9672,
      "gagnants_pct": 46.4,
-     "R_moyen": 0.053,
-     "R_median": -0.191,
+     "R_moyen": 0.052,
+     "R_median": -0.192,
      "R_moyen_gain": 1.14,
      "R_moyen_perte": -0.89,
      "profit_factor": 1.12,
-     "pnl_total_usd": 10696.0,
+     "pnl_total_usd": 10715.0,
      "pnl_moyen_usd": 1.11,
      "duree_moy": 7.9,
      "pire_serie_pertes": 13
     },
     "recent": {
-     "trades": 3841,
+     "trades": 3870,
      "gagnants_pct": 47.4,
-     "R_moyen": 0.079,
-     "R_median": -0.123,
+     "R_moyen": 0.078,
+     "R_median": -0.122,
      "R_moyen_gain": 1.14,
      "R_moyen_perte": -0.88,
      "profit_factor": 1.18,
-     "pnl_total_usd": 6632.0,
-     "pnl_moyen_usd": 1.73,
+     "pnl_total_usd": 6617.0,
+     "pnl_moyen_usd": 1.71,
      "duree_moy": 7.9,
      "pire_serie_pertes": 12
     }
@@ -616,28 +680,28 @@
   "V3": {
    "R1": {
     "tout": {
-     "trades": 1784,
+     "trades": 1777,
      "gagnants_pct": 42.1,
-     "R_moyen": 0.109,
-     "R_median": -0.68,
+     "R_moyen": 0.111,
+     "R_median": -0.634,
      "R_moyen_gain": 1.53,
      "R_moyen_perte": -0.92,
      "profit_factor": 1.2,
-     "pnl_total_usd": 3193.0,
-     "pnl_moyen_usd": 1.79,
+     "pnl_total_usd": 3232.0,
+     "pnl_moyen_usd": 1.82,
      "duree_moy": 6.8,
      "pire_serie_pertes": 11
     },
     "recent": {
-     "trades": 727,
-     "gagnants_pct": 42.9,
-     "R_moyen": 0.161,
-     "R_median": -0.587,
+     "trades": 728,
+     "gagnants_pct": 43.0,
+     "R_moyen": 0.164,
+     "R_median": -0.551,
      "R_moyen_gain": 1.61,
      "R_moyen_perte": -0.93,
-     "profit_factor": 1.37,
-     "pnl_total_usd": 2461.0,
-     "pnl_moyen_usd": 3.39,
+     "profit_factor": 1.38,
+     "pnl_total_usd": 2502.0,
+     "pnl_moyen_usd": 3.44,
      "duree_moy": 6.6,
      "pire_serie_pertes": 11
     }
@@ -652,7 +716,7 @@
      "R_moyen_perte": -0.82,
      "profit_factor": 1.44,
      "pnl_total_usd": 137.0,
-     "pnl_moyen_usd": 2.74,
+     "pnl_moyen_usd": 2.73,
      "duree_moy": 8.4,
      "pire_serie_pertes": 4
     },
@@ -672,71 +736,71 @@
    },
    "R3 (demi-taille)": {
     "tout": {
-     "trades": 1475,
-     "gagnants_pct": 48.8,
-     "R_moyen": 0.108,
-     "R_median": -0.054,
-     "R_moyen_gain": 1.05,
+     "trades": 1474,
+     "gagnants_pct": 48.9,
+     "R_moyen": 0.111,
+     "R_median": -0.048,
+     "R_moyen_gain": 1.06,
      "R_moyen_perte": -0.79,
-     "profit_factor": 1.27,
-     "pnl_total_usd": 2226.0,
-     "pnl_moyen_usd": 1.51,
+     "profit_factor": 1.28,
+     "pnl_total_usd": 2282.0,
+     "pnl_moyen_usd": 1.55,
      "duree_moy": 9.0,
      "pire_serie_pertes": 13
     },
     "recent": {
-     "trades": 558,
-     "gagnants_pct": 45.5,
-     "R_moyen": 0.095,
-     "R_median": -0.167,
-     "R_moyen_gain": 1.16,
+     "trades": 559,
+     "gagnants_pct": 45.6,
+     "R_moyen": 0.098,
+     "R_median": -0.162,
+     "R_moyen_gain": 1.17,
      "R_moyen_perte": -0.8,
-     "profit_factor": 1.23,
-     "pnl_total_usd": 744.0,
-     "pnl_moyen_usd": 1.33,
+     "profit_factor": 1.24,
+     "pnl_total_usd": 772.0,
+     "pnl_moyen_usd": 1.38,
      "duree_moy": 8.5,
      "pire_serie_pertes": 9
     }
    },
    "**R1+R2+R3 (v3)**": {
     "tout": {
-     "trades": 3309,
+     "trades": 3301,
      "gagnants_pct": 45.3,
-     "R_moyen": 0.109,
-     "R_median": -0.227,
+     "R_moyen": 0.111,
+     "R_median": -0.218,
      "R_moyen_gain": 1.29,
      "R_moyen_perte": -0.87,
      "profit_factor": 1.23,
-     "pnl_total_usd": 5556.0,
-     "pnl_moyen_usd": 1.68,
+     "pnl_total_usd": 5650.0,
+     "pnl_moyen_usd": 1.71,
      "duree_moy": 7.8,
      "pire_serie_pertes": 12
     },
     "recent": {
-     "trades": 1308,
-     "gagnants_pct": 44.0,
-     "R_moyen": 0.126,
-     "R_median": -0.285,
+     "trades": 1310,
+     "gagnants_pct": 44.1,
+     "R_moyen": 0.129,
+     "R_median": -0.281,
      "R_moyen_gain": 1.4,
      "R_moyen_perte": -0.87,
      "profit_factor": 1.31,
-     "pnl_total_usd": 3114.0,
-     "pnl_moyen_usd": 2.38,
+     "pnl_total_usd": 3182.0,
+     "pnl_moyen_usd": 2.43,
      "duree_moy": 7.5,
      "pire_serie_pertes": 10
     }
    },
    "v3.1 R1 (recul ≥ 15 %)": {
     "tout": {
-     "trades": 701,
+     "trades": 700,
      "gagnants_pct": 43.9,
-     "R_moyen": 0.179,
-     "R_median": -0.474,
+     "R_moyen": 0.176,
+     "R_median": -0.528,
      "R_moyen_gain": 1.59,
      "R_moyen_perte": -0.93,
      "profit_factor": 1.38,
-     "pnl_total_usd": 2443.0,
-     "pnl_moyen_usd": 3.49,
+     "pnl_total_usd": 2413.0,
+     "pnl_moyen_usd": 3.45,
      "duree_moy": 6.8,
      "pire_serie_pertes": 9
     },
@@ -748,208 +812,994 @@
      "R_moyen_gain": 1.71,
      "R_moyen_perte": -0.93,
      "profit_factor": 1.65,
-     "pnl_total_usd": 1875.0,
-     "pnl_moyen_usd": 6.05,
+     "pnl_total_usd": 1881.0,
+     "pnl_moyen_usd": 6.07,
      "duree_moy": 6.4,
      "pire_serie_pertes": 9
     }
    },
    "v3.1 R2 (sans tendance)": {
     "tout": {
-     "trades": 1131,
+     "trades": 1128,
      "gagnants_pct": 47.0,
-     "R_moyen": 0.133,
+     "R_moyen": 0.132,
      "R_median": -0.094,
      "R_moyen_gain": 1.22,
      "R_moyen_perte": -0.83,
      "profit_factor": 1.29,
-     "pnl_total_usd": 2345.0,
-     "pnl_moyen_usd": 2.07,
+     "pnl_total_usd": 2326.0,
+     "pnl_moyen_usd": 2.06,
      "duree_moy": 8.0,
      "pire_serie_pertes": 12
     },
     "recent": {
-     "trades": 453,
-     "gagnants_pct": 45.5,
-     "R_moyen": 0.078,
-     "R_median": -0.155,
+     "trades": 452,
+     "gagnants_pct": 45.4,
+     "R_moyen": 0.079,
+     "R_median": -0.166,
      "R_moyen_gain": 1.18,
      "R_moyen_perte": -0.84,
      "profit_factor": 1.16,
-     "pnl_total_usd": 538.0,
-     "pnl_moyen_usd": 1.19,
+     "pnl_total_usd": 547.0,
+     "pnl_moyen_usd": 1.21,
      "duree_moy": 7.7,
      "pire_serie_pertes": 9
     }
    },
    "v3.1 R3 (en correction)": {
     "tout": {
-     "trades": 690,
-     "gagnants_pct": 53.3,
-     "R_moyen": 0.183,
+     "trades": 691,
+     "gagnants_pct": 53.4,
+     "R_moyen": 0.186,
      "R_median": 0.136,
      "R_moyen_gain": 1.06,
      "R_moyen_perte": -0.82,
-     "profit_factor": 1.49,
-     "pnl_total_usd": 1758.0,
-     "pnl_moyen_usd": 2.55,
+     "profit_factor": 1.5,
+     "pnl_total_usd": 1786.0,
+     "pnl_moyen_usd": 2.58,
      "duree_moy": 9.1,
      "pire_serie_pertes": 7
     },
     "recent": {
-     "trades": 214,
-     "gagnants_pct": 51.9,
-     "R_moyen": 0.183,
-     "R_median": 0.108,
-     "R_moyen_gain": 1.14,
+     "trades": 215,
+     "gagnants_pct": 52.1,
+     "R_moyen": 0.191,
+     "R_median": 0.133,
+     "R_moyen_gain": 1.15,
      "R_moyen_perte": -0.85,
-     "profit_factor": 1.45,
-     "pnl_total_usd": 535.0,
-     "pnl_moyen_usd": 2.5,
+     "profit_factor": 1.48,
+     "pnl_total_usd": 563.0,
+     "pnl_moyen_usd": 2.62,
      "duree_moy": 8.5,
      "pire_serie_pertes": 6
     }
    },
    "**v3.1 total (sans REIT)**": {
     "tout": {
-     "trades": 2522,
+     "trades": 2519,
      "gagnants_pct": 47.9,
-     "R_moyen": 0.16,
-     "R_median": -0.086,
-     "R_moyen_gain": 1.27,
+     "R_moyen": 0.159,
+     "R_median": -0.088,
+     "R_moyen_gain": 1.26,
      "R_moyen_perte": -0.86,
      "profit_factor": 1.36,
-     "pnl_total_usd": 6546.0,
-     "pnl_moyen_usd": 2.6,
-     "duree_moy": 8.0,
+     "pnl_total_usd": 6525.0,
+     "pnl_moyen_usd": 2.59,
+     "duree_moy": 7.9,
      "pire_serie_pertes": 10
     },
     "recent": {
      "trades": 977,
      "gagnants_pct": 47.1,
-     "R_moyen": 0.166,
+     "R_moyen": 0.169,
      "R_median": -0.135,
-     "R_moyen_gain": 1.33,
+     "R_moyen_gain": 1.34,
      "R_moyen_perte": -0.87,
      "profit_factor": 1.4,
-     "pnl_total_usd": 2948.0,
-     "pnl_moyen_usd": 3.02,
+     "pnl_total_usd": 2991.0,
+     "pnl_moyen_usd": 3.06,
      "duree_moy": 7.5,
      "pire_serie_pertes": 10
     }
    },
+   "**Panique (leaders au rebond)**": {
+    "tout": {
+     "trades": 1571,
+     "gagnants_pct": 50.4,
+     "R_moyen": 0.102,
+     "R_median": 0.009,
+     "R_moyen_gain": 1.08,
+     "R_moyen_perte": -0.89,
+     "profit_factor": 1.23,
+     "pnl_total_usd": 4359.0,
+     "pnl_moyen_usd": 2.77,
+     "duree_moy": 7.8,
+     "pire_serie_pertes": 11
+    },
+    "recent": {
+     "trades": 551,
+     "gagnants_pct": 53.0,
+     "R_moyen": 0.038,
+     "R_median": 0.05,
+     "R_moyen_gain": 0.83,
+     "R_moyen_perte": -0.85,
+     "profit_factor": 1.09,
+     "pnl_total_usd": 557.0,
+     "pnl_moyen_usd": 1.01,
+     "duree_moy": 7.8,
+     "pire_serie_pertes": 6
+    }
+   },
    "Témoin R2 large": {
     "tout": {
-     "trades": 1265,
+     "trades": 1261,
      "gagnants_pct": 47.0,
      "R_moyen": 0.134,
      "R_median": -0.094,
      "R_moyen_gain": 1.22,
      "R_moyen_perte": -0.83,
      "profit_factor": 1.28,
-     "pnl_total_usd": 2550.0,
+     "pnl_total_usd": 2545.0,
      "pnl_moyen_usd": 2.02,
      "duree_moy": 8.0,
      "pire_serie_pertes": 11
     },
     "recent": {
-     "trades": 519,
-     "gagnants_pct": 45.9,
-     "R_moyen": 0.091,
+     "trades": 517,
+     "gagnants_pct": 45.8,
+     "R_moyen": 0.094,
      "R_median": -0.144,
      "R_moyen_gain": 1.19,
      "R_moyen_perte": -0.84,
-     "profit_factor": 1.18,
-     "pnl_total_usd": 681.0,
-     "pnl_moyen_usd": 1.31,
+     "profit_factor": 1.19,
+     "pnl_total_usd": 705.0,
+     "pnl_moyen_usd": 1.36,
      "duree_moy": 7.7,
      "pire_serie_pertes": 9
     }
    },
    "Témoin Zone sans setup": {
     "tout": {
-     "trades": 9659,
-     "gagnants_pct": 44.3,
+     "trades": 9672,
+     "gagnants_pct": 44.2,
      "R_moyen": 0.054,
-     "R_median": -0.277,
+     "R_median": -0.278,
      "R_moyen_gain": 1.23,
      "R_moyen_perte": -0.88,
      "profit_factor": 1.12,
-     "pnl_total_usd": 11133.0,
+     "pnl_total_usd": 11143.0,
      "pnl_moyen_usd": 1.15,
      "duree_moy": 7.8,
      "pire_serie_pertes": 19
     },
     "recent": {
-     "trades": 3841,
+     "trades": 3870,
      "gagnants_pct": 45.4,
-     "R_moyen": 0.085,
-     "R_median": -0.195,
+     "R_moyen": 0.084,
+     "R_median": -0.196,
      "R_moyen_gain": 1.23,
      "R_moyen_perte": -0.87,
      "profit_factor": 1.19,
-     "pnl_total_usd": 7145.0,
-     "pnl_moyen_usd": 1.86,
+     "pnl_total_usd": 7119.0,
+     "pnl_moyen_usd": 1.84,
      "duree_moy": 7.8,
      "pire_serie_pertes": 13
     }
    }
+  },
+  "V4": {
+   "R1": {
+    "tout": {
+     "trades": 1777,
+     "gagnants_pct": 39.2,
+     "R_moyen": 0.138,
+     "R_median": -1.0,
+     "R_moyen_gain": 1.9,
+     "R_moyen_perte": -0.99,
+     "profit_factor": 1.25,
+     "pnl_total_usd": 4545.0,
+     "pnl_moyen_usd": 2.56,
+     "duree_moy": 11.7,
+     "pire_serie_pertes": 11
+    },
+    "recent": {
+     "trades": 728,
+     "gagnants_pct": 40.2,
+     "R_moyen": 0.22,
+     "R_median": -1.0,
+     "R_moyen_gain": 2.02,
+     "R_moyen_perte": -0.99,
+     "profit_factor": 1.47,
+     "pnl_total_usd": 3536.0,
+     "pnl_moyen_usd": 4.86,
+     "duree_moy": 11.9,
+     "pire_serie_pertes": 8
+    }
+   },
+   "R2": {
+    "tout": {
+     "trades": 50,
+     "gagnants_pct": 48.0,
+     "R_moyen": 0.227,
+     "R_median": -0.082,
+     "R_moyen_gain": 1.36,
+     "R_moyen_perte": -0.82,
+     "profit_factor": 1.7,
+     "pnl_total_usd": 263.0,
+     "pnl_moyen_usd": 5.27,
+     "duree_moy": 14.0,
+     "pire_serie_pertes": 4
+    },
+    "recent": {
+     "trades": 23,
+     "gagnants_pct": 39.1,
+     "R_moyen": 0.086,
+     "R_median": -1.0,
+     "R_moyen_gain": 1.71,
+     "R_moyen_perte": -0.96,
+     "profit_factor": 1.33,
+     "pnl_total_usd": 81.0,
+     "pnl_moyen_usd": 3.52,
+     "duree_moy": 13.3,
+     "pire_serie_pertes": 3
+    }
+   },
+   "R3 (demi-taille)": {
+    "tout": {
+     "trades": 1474,
+     "gagnants_pct": 44.2,
+     "R_moyen": 0.127,
+     "R_median": -0.522,
+     "R_moyen_gain": 1.46,
+     "R_moyen_perte": -0.92,
+     "profit_factor": 1.26,
+     "pnl_total_usd": 2670.0,
+     "pnl_moyen_usd": 1.81,
+     "duree_moy": 14.8,
+     "pire_serie_pertes": 9
+    },
+    "recent": {
+     "trades": 559,
+     "gagnants_pct": 45.4,
+     "R_moyen": 0.142,
+     "R_median": -0.448,
+     "R_moyen_gain": 1.43,
+     "R_moyen_perte": -0.93,
+     "profit_factor": 1.3,
+     "pnl_total_usd": 1136.0,
+     "pnl_moyen_usd": 2.03,
+     "duree_moy": 14.4,
+     "pire_serie_pertes": 10
+    }
+   },
+   "**R1+R2+R3 (v3)**": {
+    "tout": {
+     "trades": 3301,
+     "gagnants_pct": 41.5,
+     "R_moyen": 0.135,
+     "R_median": -1.0,
+     "R_moyen_gain": 1.68,
+     "R_moyen_perte": -0.96,
+     "profit_factor": 1.26,
+     "pnl_total_usd": 7479.0,
+     "pnl_moyen_usd": 2.27,
+     "duree_moy": 13.1,
+     "pire_serie_pertes": 15
+    },
+    "recent": {
+     "trades": 1310,
+     "gagnants_pct": 42.4,
+     "R_moyen": 0.184,
+     "R_median": -1.0,
+     "R_moyen_gain": 1.75,
+     "R_moyen_perte": -0.97,
+     "profit_factor": 1.41,
+     "pnl_total_usd": 4753.0,
+     "pnl_moyen_usd": 3.63,
+     "duree_moy": 13.0,
+     "pire_serie_pertes": 9
+    }
+   },
+   "v3.1 R1 (recul ≥ 15 %)": {
+    "tout": {
+     "trades": 700,
+     "gagnants_pct": 41.4,
+     "R_moyen": 0.221,
+     "R_median": -1.0,
+     "R_moyen_gain": 1.94,
+     "R_moyen_perte": -1.0,
+     "profit_factor": 1.48,
+     "pnl_total_usd": 3483.0,
+     "pnl_moyen_usd": 4.98,
+     "duree_moy": 12.1,
+     "pire_serie_pertes": 9
+    },
+    "recent": {
+     "trades": 310,
+     "gagnants_pct": 43.2,
+     "R_moyen": 0.347,
+     "R_median": -1.0,
+     "R_moyen_gain": 2.12,
+     "R_moyen_perte": -1.0,
+     "profit_factor": 1.75,
+     "pnl_total_usd": 2427.0,
+     "pnl_moyen_usd": 7.83,
+     "duree_moy": 12.3,
+     "pire_serie_pertes": 9
+    }
+   },
+   "v3.1 R2 (sans tendance)": {
+    "tout": {
+     "trades": 1128,
+     "gagnants_pct": 42.4,
+     "R_moyen": 0.104,
+     "R_median": -1.0,
+     "R_moyen_gain": 1.56,
+     "R_moyen_perte": -0.96,
+     "profit_factor": 1.19,
+     "pnl_total_usd": 1923.0,
+     "pnl_moyen_usd": 1.7,
+     "duree_moy": 12.7,
+     "pire_serie_pertes": 19
+    },
+    "recent": {
+     "trades": 452,
+     "gagnants_pct": 41.6,
+     "R_moyen": 0.062,
+     "R_median": -1.0,
+     "R_moyen_gain": 1.51,
+     "R_moyen_perte": -0.97,
+     "profit_factor": 1.1,
+     "pnl_total_usd": 411.0,
+     "pnl_moyen_usd": 0.91,
+     "duree_moy": 11.9,
+     "pire_serie_pertes": 11
+    }
+   },
+   "v3.1 R3 (en correction)": {
+    "tout": {
+     "trades": 691,
+     "gagnants_pct": 45.6,
+     "R_moyen": 0.17,
+     "R_median": -0.507,
+     "R_moyen_gain": 1.5,
+     "R_moyen_perte": -0.94,
+     "profit_factor": 1.35,
+     "pnl_total_usd": 1673.0,
+     "pnl_moyen_usd": 2.42,
+     "duree_moy": 14.3,
+     "pire_serie_pertes": 8
+    },
+    "recent": {
+     "trades": 215,
+     "gagnants_pct": 48.4,
+     "R_moyen": 0.181,
+     "R_median": -0.195,
+     "R_moyen_gain": 1.37,
+     "R_moyen_perte": -0.93,
+     "profit_factor": 1.4,
+     "pnl_total_usd": 557.0,
+     "pnl_moyen_usd": 2.59,
+     "duree_moy": 14.0,
+     "pire_serie_pertes": 7
+    }
+   },
+   "**v3.1 total (sans REIT)**": {
+    "tout": {
+     "trades": 2519,
+     "gagnants_pct": 43.0,
+     "R_moyen": 0.155,
+     "R_median": -1.0,
+     "R_moyen_gain": 1.64,
+     "R_moyen_perte": -0.97,
+     "profit_factor": 1.32,
+     "pnl_total_usd": 7079.0,
+     "pnl_moyen_usd": 2.81,
+     "duree_moy": 13.0,
+     "pire_serie_pertes": 13
+    },
+    "recent": {
+     "trades": 977,
+     "gagnants_pct": 43.6,
+     "R_moyen": 0.179,
+     "R_median": -1.0,
+     "R_moyen_gain": 1.67,
+     "R_moyen_perte": -0.97,
+     "profit_factor": 1.39,
+     "pnl_total_usd": 3394.0,
+     "pnl_moyen_usd": 3.47,
+     "duree_moy": 12.5,
+     "pire_serie_pertes": 10
+    }
+   },
+   "**Panique (leaders au rebond)**": {
+    "tout": {
+     "trades": 1571,
+     "gagnants_pct": 43.6,
+     "R_moyen": 0.103,
+     "R_median": -0.695,
+     "R_moyen_gain": 1.45,
+     "R_moyen_perte": -0.94,
+     "profit_factor": 1.19,
+     "pnl_total_usd": 4507.0,
+     "pnl_moyen_usd": 2.87,
+     "duree_moy": 12.3,
+     "pire_serie_pertes": 11
+    },
+    "recent": {
+     "trades": 551,
+     "gagnants_pct": 45.7,
+     "R_moyen": 0.074,
+     "R_median": -0.237,
+     "R_moyen_gain": 1.28,
+     "R_moyen_perte": -0.94,
+     "profit_factor": 1.11,
+     "pnl_total_usd": 908.0,
+     "pnl_moyen_usd": 1.65,
+     "duree_moy": 11.7,
+     "pire_serie_pertes": 8
+    }
+   },
+   "Témoin R2 large": {
+    "tout": {
+     "trades": 1261,
+     "gagnants_pct": 42.4,
+     "R_moyen": 0.104,
+     "R_median": -1.0,
+     "R_moyen_gain": 1.55,
+     "R_moyen_perte": -0.96,
+     "profit_factor": 1.18,
+     "pnl_total_usd": 2084.0,
+     "pnl_moyen_usd": 1.65,
+     "duree_moy": 12.7,
+     "pire_serie_pertes": 21
+    },
+    "recent": {
+     "trades": 517,
+     "gagnants_pct": 42.6,
+     "R_moyen": 0.074,
+     "R_median": -1.0,
+     "R_moyen_gain": 1.48,
+     "R_moyen_perte": -0.97,
+     "profit_factor": 1.12,
+     "pnl_total_usd": 545.0,
+     "pnl_moyen_usd": 1.05,
+     "duree_moy": 11.9,
+     "pire_serie_pertes": 12
+    }
+   },
+   "Témoin Zone sans setup": {
+    "tout": {
+     "trades": 9672,
+     "gagnants_pct": 39.7,
+     "R_moyen": 0.071,
+     "R_median": -1.0,
+     "R_moyen_gain": 1.63,
+     "R_moyen_perte": -0.96,
+     "profit_factor": 1.14,
+     "pnl_total_usd": 15423.0,
+     "pnl_moyen_usd": 1.59,
+     "duree_moy": 13.1,
+     "pire_serie_pertes": 19
+    },
+    "recent": {
+     "trades": 3870,
+     "gagnants_pct": 41.5,
+     "R_moyen": 0.152,
+     "R_median": -1.0,
+     "R_moyen_gain": 1.72,
+     "R_moyen_perte": -0.96,
+     "profit_factor": 1.3,
+     "pnl_total_usd": 13016.0,
+     "pnl_moyen_usd": 3.36,
+     "duree_moy": 13.4,
+     "pire_serie_pertes": 14
+    }
+   }
+  },
+  "V5": {
+   "R1": {
+    "tout": {
+     "trades": 1777,
+     "gagnants_pct": 44.9,
+     "R_moyen": 0.127,
+     "R_median": -0.745,
+     "R_moyen_gain": 1.84,
+     "R_moyen_perte": -1.27,
+     "profit_factor": 1.24,
+     "pnl_total_usd": 4821.0,
+     "pnl_moyen_usd": 2.71,
+     "duree_moy": 13.5,
+     "pire_serie_pertes": 10
+    },
+    "recent": {
+     "trades": 728,
+     "gagnants_pct": 46.0,
+     "R_moyen": 0.238,
+     "R_median": -0.472,
+     "R_moyen_gain": 2.01,
+     "R_moyen_perte": -1.27,
+     "profit_factor": 1.48,
+     "pnl_total_usd": 4075.0,
+     "pnl_moyen_usd": 5.6,
+     "duree_moy": 13.7,
+     "pire_serie_pertes": 8
+    }
+   },
+   "R2": {
+    "tout": {
+     "trades": 50,
+     "gagnants_pct": 50.0,
+     "R_moyen": 0.197,
+     "R_median": -0.012,
+     "R_moyen_gain": 1.36,
+     "R_moyen_perte": -0.96,
+     "profit_factor": 1.53,
+     "pnl_total_usd": 227.0,
+     "pnl_moyen_usd": 4.53,
+     "duree_moy": 15.5,
+     "pire_serie_pertes": 4
+    },
+    "recent": {
+     "trades": 23,
+     "gagnants_pct": 43.5,
+     "R_moyen": 0.088,
+     "R_median": -1.045,
+     "R_moyen_gain": 1.67,
+     "R_moyen_perte": -1.13,
+     "profit_factor": 1.23,
+     "pnl_total_usd": 63.0,
+     "pnl_moyen_usd": 2.76,
+     "duree_moy": 15.0,
+     "pire_serie_pertes": 2
+    }
+   },
+   "R3 (demi-taille)": {
+    "tout": {
+     "trades": 1474,
+     "gagnants_pct": 48.8,
+     "R_moyen": 0.153,
+     "R_median": -0.072,
+     "R_moyen_gain": 1.43,
+     "R_moyen_perte": -1.06,
+     "profit_factor": 1.29,
+     "pnl_total_usd": 3193.0,
+     "pnl_moyen_usd": 2.17,
+     "duree_moy": 16.0,
+     "pire_serie_pertes": 9
+    },
+    "recent": {
+     "trades": 559,
+     "gagnants_pct": 49.9,
+     "R_moyen": 0.155,
+     "R_median": -0.028,
+     "R_moyen_gain": 1.4,
+     "R_moyen_perte": -1.09,
+     "profit_factor": 1.3,
+     "pnl_total_usd": 1224.0,
+     "pnl_moyen_usd": 2.19,
+     "duree_moy": 15.7,
+     "pire_serie_pertes": 10
+    }
+   },
+   "**R1+R2+R3 (v3)**": {
+    "tout": {
+     "trades": 3301,
+     "gagnants_pct": 46.7,
+     "R_moyen": 0.14,
+     "R_median": -0.295,
+     "R_moyen_gain": 1.64,
+     "R_moyen_perte": -1.18,
+     "profit_factor": 1.26,
+     "pnl_total_usd": 8241.0,
+     "pnl_moyen_usd": 2.5,
+     "duree_moy": 14.6,
+     "pire_serie_pertes": 13
+    },
+    "recent": {
+     "trades": 1310,
+     "gagnants_pct": 47.6,
+     "R_moyen": 0.2,
+     "R_median": -0.206,
+     "R_moyen_gain": 1.73,
+     "R_moyen_perte": -1.19,
+     "profit_factor": 1.42,
+     "pnl_total_usd": 5363.0,
+     "pnl_moyen_usd": 4.09,
+     "duree_moy": 14.6,
+     "pire_serie_pertes": 9
+    }
+   },
+   "v3.1 R1 (recul ≥ 15 %)": {
+    "tout": {
+     "trades": 700,
+     "gagnants_pct": 47.4,
+     "R_moyen": 0.243,
+     "R_median": -0.42,
+     "R_moyen_gain": 1.93,
+     "R_moyen_perte": -1.28,
+     "profit_factor": 1.52,
+     "pnl_total_usd": 4172.0,
+     "pnl_moyen_usd": 5.96,
+     "duree_moy": 14.0,
+     "pire_serie_pertes": 8
+    },
+    "recent": {
+     "trades": 310,
+     "gagnants_pct": 49.4,
+     "R_moyen": 0.436,
+     "R_median": -0.067,
+     "R_moyen_gain": 2.18,
+     "R_moyen_perte": -1.26,
+     "profit_factor": 1.9,
+     "pnl_total_usd": 3146.0,
+     "pnl_moyen_usd": 10.15,
+     "duree_moy": 14.6,
+     "pire_serie_pertes": 7
+    }
+   },
+   "v3.1 R2 (sans tendance)": {
+    "tout": {
+     "trades": 1128,
+     "gagnants_pct": 49.1,
+     "R_moyen": 0.145,
+     "R_median": -0.064,
+     "R_moyen_gain": 1.54,
+     "R_moyen_perte": -1.2,
+     "profit_factor": 1.23,
+     "pnl_total_usd": 2593.0,
+     "pnl_moyen_usd": 2.3,
+     "duree_moy": 14.6,
+     "pire_serie_pertes": 7
+    },
+    "recent": {
+     "trades": 452,
+     "gagnants_pct": 48.5,
+     "R_moyen": 0.089,
+     "R_median": -0.097,
+     "R_moyen_gain": 1.52,
+     "R_moyen_perte": -1.26,
+     "profit_factor": 1.1,
+     "pnl_total_usd": 465.0,
+     "pnl_moyen_usd": 1.03,
+     "duree_moy": 13.8,
+     "pire_serie_pertes": 10
+    }
+   },
+   "v3.1 R3 (en correction)": {
+    "tout": {
+     "trades": 691,
+     "gagnants_pct": 50.7,
+     "R_moyen": 0.221,
+     "R_median": 0.036,
+     "R_moyen_gain": 1.48,
+     "R_moyen_perte": -1.07,
+     "profit_factor": 1.43,
+     "pnl_total_usd": 2138.0,
+     "pnl_moyen_usd": 3.09,
+     "duree_moy": 15.5,
+     "pire_serie_pertes": 8
+    },
+    "recent": {
+     "trades": 215,
+     "gagnants_pct": 53.0,
+     "R_moyen": 0.177,
+     "R_median": 0.16,
+     "R_moyen_gain": 1.32,
+     "R_moyen_perte": -1.11,
+     "profit_factor": 1.36,
+     "pnl_total_usd": 540.0,
+     "pnl_moyen_usd": 2.51,
+     "duree_moy": 15.0,
+     "pire_serie_pertes": 7
+    }
+   },
+   "**v3.1 total (sans REIT)**": {
+    "tout": {
+     "trades": 2519,
+     "gagnants_pct": 49.1,
+     "R_moyen": 0.193,
+     "R_median": -0.088,
+     "R_moyen_gain": 1.63,
+     "R_moyen_perte": -1.19,
+     "profit_factor": 1.37,
+     "pnl_total_usd": 8903.0,
+     "pnl_moyen_usd": 3.53,
+     "duree_moy": 14.7,
+     "pire_serie_pertes": 10
+    },
+    "recent": {
+     "trades": 977,
+     "gagnants_pct": 49.7,
+     "R_moyen": 0.218,
+     "R_median": -0.007,
+     "R_moyen_gain": 1.68,
+     "R_moyen_perte": -1.23,
+     "profit_factor": 1.42,
+     "pnl_total_usd": 4152.0,
+     "pnl_moyen_usd": 4.25,
+     "duree_moy": 14.3,
+     "pire_serie_pertes": 10
+    }
+   },
+   "**Panique (leaders au rebond)**": {
+    "tout": {
+     "trades": 1571,
+     "gagnants_pct": 49.2,
+     "R_moyen": 0.112,
+     "R_median": -0.027,
+     "R_moyen_gain": 1.45,
+     "R_moyen_perte": -1.18,
+     "profit_factor": 1.17,
+     "pnl_total_usd": 4501.0,
+     "pnl_moyen_usd": 2.86,
+     "duree_moy": 13.8,
+     "pire_serie_pertes": 10
+    },
+    "recent": {
+     "trades": 551,
+     "gagnants_pct": 50.6,
+     "R_moyen": 0.033,
+     "R_median": 0.034,
+     "R_moyen_gain": 1.27,
+     "R_moyen_perte": -1.24,
+     "profit_factor": 0.99,
+     "pnl_total_usd": -56.0,
+     "pnl_moyen_usd": -0.1,
+     "duree_moy": 13.0,
+     "pire_serie_pertes": 7
+    }
+   },
+   "Témoin R2 large": {
+    "tout": {
+     "trades": 1261,
+     "gagnants_pct": 48.8,
+     "R_moyen": 0.137,
+     "R_median": -0.118,
+     "R_moyen_gain": 1.53,
+     "R_moyen_perte": -1.19,
+     "profit_factor": 1.21,
+     "pnl_total_usd": 2642.0,
+     "pnl_moyen_usd": 2.1,
+     "duree_moy": 14.5,
+     "pire_serie_pertes": 10
+    },
+    "recent": {
+     "trades": 517,
+     "gagnants_pct": 48.9,
+     "R_moyen": 0.1,
+     "R_median": -0.067,
+     "R_moyen_gain": 1.49,
+     "R_moyen_perte": -1.23,
+     "profit_factor": 1.12,
+     "pnl_total_usd": 613.0,
+     "pnl_moyen_usd": 1.19,
+     "duree_moy": 13.7,
+     "pire_serie_pertes": 8
+    }
+   },
+   "Témoin Zone sans setup": {
+    "tout": {
+     "trades": 9672,
+     "gagnants_pct": 45.3,
+     "R_moyen": 0.096,
+     "R_median": -0.346,
+     "R_moyen_gain": 1.59,
+     "R_moyen_perte": -1.14,
+     "profit_factor": 1.18,
+     "pnl_total_usd": 20817.0,
+     "pnl_moyen_usd": 2.15,
+     "duree_moy": 15.0,
+     "pire_serie_pertes": 19
+    },
+    "recent": {
+     "trades": 3870,
+     "gagnants_pct": 47.8,
+     "R_moyen": 0.204,
+     "R_median": -0.16,
+     "R_moyen_gain": 1.68,
+     "R_moyen_perte": -1.15,
+     "profit_factor": 1.37,
+     "pnl_total_usd": 17324.0,
+     "pnl_moyen_usd": 4.48,
+     "duree_moy": 15.3,
+     "pire_serie_pertes": 14
+    }
+   }
   }
  },
- "portefeuille_5_ans": {
-  "trades_retenus": 883,
-  "refus": {
-   "risque": 1199,
-   "secteur": 234,
-   "cash": 993
+ "portefeuilles": {
+  "v3.1 actuelle (sorties V1) — 5 ans": {
+   "trades_retenus": 828,
+   "trades_par_mois": 13.9,
+   "refus": {
+    "risque": 1268,
+    "secteur": 155,
+    "cash": 268,
+    "deja_en_portefeuille": 0
+   },
+   "valeur_finale": 5060.41,
+   "perf_pct": 153.0,
+   "drawdown_max_pct": -9.9,
+   "positions_moy": 4.02,
+   "spy_perf_pct": 73.2,
+   "spy_drawdown_max_pct": -24.5
   },
-  "valeur_finale": 3613.34,
-  "perf_pct": 80.7,
-  "drawdown_max_pct": -16.0,
-  "positions_moy": 4.18,
-  "spy_perf_pct": 72.2,
-  "spy_drawdown_max_pct": -24.5
- },
- "portefeuille_2_ans": {
-  "trades_retenus": 390,
-  "refus": {
-   "risque": 534,
-   "secteur": 89,
-   "cash": 295
+  "v3.1 actuelle (sorties V1) — 2 ans": {
+   "trades_retenus": 337,
+   "trades_par_mois": 14.1,
+   "refus": {
+    "risque": 457,
+    "secteur": 62,
+    "cash": 121,
+    "deja_en_portefeuille": 0
+   },
+   "valeur_finale": 3427.36,
+   "perf_pct": 71.4,
+   "drawdown_max_pct": -13.0,
+   "positions_moy": 3.91,
+   "spy_perf_pct": 29.8,
+   "spy_drawdown_max_pct": -18.8
   },
-  "valeur_finale": 3283.78,
-  "perf_pct": 64.2,
-  "drawdown_max_pct": -10.0,
-  "positions_moy": 4.8,
-  "spy_perf_pct": 28.6,
-  "spy_drawdown_max_pct": -18.8
- },
- "portefeuille_5_ans_v3.1": {
-  "trades_retenus": 829,
-  "refus": {
-   "risque": 1279,
-   "secteur": 154,
-   "cash": 260
+  "v3.1 avec gestion position (V4) — 5 ans": {
+   "trades_retenus": 544,
+   "trades_par_mois": 9.1,
+   "refus": {
+    "risque": 1230,
+    "secteur": 174,
+    "cash": 555,
+    "deja_en_portefeuille": 16
+   },
+   "valeur_finale": 5209.83,
+   "perf_pct": 160.5,
+   "drawdown_max_pct": -11.0,
+   "positions_moy": 5.33,
+   "spy_perf_pct": 73.2,
+   "spy_drawdown_max_pct": -24.5
   },
-  "valeur_finale": 5030.4,
-  "perf_pct": 151.5,
-  "drawdown_max_pct": -8.2,
-  "positions_moy": 4.05,
-  "spy_perf_pct": 72.2,
-  "spy_drawdown_max_pct": -24.5
- },
- "portefeuille_2_ans_v3.1": {
-  "trades_retenus": 337,
-  "refus": {
-   "risque": 452,
-   "secteur": 67,
-   "cash": 121
+  "v3.1 avec gestion position (V4) — 2 ans": {
+   "trades_retenus": 191,
+   "trades_par_mois": 8.0,
+   "refus": {
+    "risque": 381,
+    "secteur": 71,
+    "cash": 329,
+    "deja_en_portefeuille": 5
+   },
+   "valeur_finale": 3144.62,
+   "perf_pct": 57.2,
+   "drawdown_max_pct": -11.2,
+   "positions_moy": 4.57,
+   "spy_perf_pct": 29.8,
+   "spy_drawdown_max_pct": -18.8
   },
-  "valeur_finale": 3394.4,
-  "perf_pct": 69.7,
-  "drawdown_max_pct": -13.3,
-  "positions_moy": 3.92,
-  "spy_perf_pct": 28.6,
-  "spy_drawdown_max_pct": -18.8
+  "Panique seule (V4) — 5 ans": {
+   "trades_retenus": 136,
+   "trades_par_mois": 2.3,
+   "refus": {
+    "risque": 494,
+    "secteur": 118,
+    "cash": 823,
+    "deja_en_portefeuille": 0
+   },
+   "valeur_finale": 2198.35,
+   "perf_pct": 9.9,
+   "drawdown_max_pct": -35.2,
+   "positions_moy": 1.1,
+   "spy_perf_pct": 73.2,
+   "spy_drawdown_max_pct": -24.5
+  },
+  "Panique seule (V4) — 2 ans": {
+   "trades_retenus": 55,
+   "trades_par_mois": 2.3,
+   "refus": {
+    "risque": 238,
+    "secteur": 57,
+    "cash": 201,
+    "deja_en_portefeuille": 0
+   },
+   "valeur_finale": 1957.94,
+   "perf_pct": -2.1,
+   "drawdown_max_pct": -22.8,
+   "positions_moy": 0.97,
+   "spy_perf_pct": 29.8,
+   "spy_drawdown_max_pct": -18.8
+  },
+  "Panique seule, stop sur clôture (V5) — 5 ans": {
+   "trades_retenus": 131,
+   "trades_par_mois": 2.2,
+   "refus": {
+    "risque": 532,
+    "secteur": 68,
+    "cash": 837,
+    "deja_en_portefeuille": 3
+   },
+   "valeur_finale": 2557.83,
+   "perf_pct": 27.9,
+   "drawdown_max_pct": -21.3,
+   "positions_moy": 1.28,
+   "spy_perf_pct": 73.2,
+   "spy_drawdown_max_pct": -24.5
+  },
+  "Panique seule, stop sur clôture (V5) — 2 ans": {
+   "trades_retenus": 49,
+   "trades_par_mois": 2.0,
+   "refus": {
+    "risque": 276,
+    "secteur": 41,
+    "cash": 185,
+    "deja_en_portefeuille": 0
+   },
+   "valeur_finale": 1755.88,
+   "perf_pct": -12.2,
+   "drawdown_max_pct": -29.9,
+   "positions_moy": 0.98,
+   "spy_perf_pct": 29.8,
+   "spy_drawdown_max_pct": -18.8
+  },
+  "v4 : panique + v3.1 (V4) — 5 ans": {
+   "trades_retenus": 568,
+   "trades_par_mois": 9.5,
+   "refus": {
+    "risque": 943,
+    "secteur": 328,
+    "cash": 2222,
+    "deja_en_portefeuille": 29
+   },
+   "valeur_finale": 4334.51,
+   "perf_pct": 116.7,
+   "drawdown_max_pct": -20.8,
+   "positions_moy": 5.11,
+   "spy_perf_pct": 73.2,
+   "spy_drawdown_max_pct": -24.5
+  },
+  "v4 : panique + v3.1 (V4) — 2 ans": {
+   "trades_retenus": 218,
+   "trades_par_mois": 9.1,
+   "refus": {
+    "risque": 356,
+    "secteur": 106,
+    "cash": 833,
+    "deja_en_portefeuille": 15
+   },
+   "valeur_finale": 2769.37,
+   "perf_pct": 38.5,
+   "drawdown_max_pct": -21.0,
+   "positions_moy": 4.79,
+   "spy_perf_pct": 29.8,
+   "spy_drawdown_max_pct": -18.8
+  },
+  "v4 : panique + v3.1, stop sur clôture (V5) — 5 ans": {
+   "trades_retenus": 464,
+   "trades_par_mois": 7.8,
+   "refus": {
+    "risque": 787,
+    "secteur": 408,
+    "cash": 2386,
+    "deja_en_portefeuille": 45
+   },
+   "valeur_finale": 4388.93,
+   "perf_pct": 119.4,
+   "drawdown_max_pct": -32.2,
+   "positions_moy": 4.93,
+   "spy_perf_pct": 73.2,
+   "spy_drawdown_max_pct": -24.5
+  },
+  "v4 : panique + v3.1, stop sur clôture (V5) — 2 ans": {
+   "trades_retenus": 202,
+   "trades_par_mois": 8.5,
+   "refus": {
+    "risque": 323,
+    "secteur": 119,
+    "cash": 873,
+    "deja_en_portefeuille": 11
+   },
+   "valeur_finale": 2771.47,
+   "perf_pct": 38.6,
+   "drawdown_max_pct": -27.3,
+   "positions_moy": 5.01,
+   "spy_perf_pct": 29.8,
+   "spy_drawdown_max_pct": -18.8
+  }
  }
 }
