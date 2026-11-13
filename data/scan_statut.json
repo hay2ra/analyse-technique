@@ -7,11 +7,11 @@
  "plafond_risque_usd": 60,
  "r3_autorise": true,
  "pistes": {
-  "R1": 35,
+  "R1": 34,
   "R2": 4,
   "R3": 92
  },
- "genere_le": "2026-11-13T22:44:02+01:00",
+ "genere_le": "2026-11-13T23:17:42+01:00",
  "derniere_seance": "2026-11-13",
  "nb_univers": 518,
  "nb_ok": 514,
