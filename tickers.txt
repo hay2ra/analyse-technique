@@ -57,6 +57,7 @@ PFE         # Pfizer
 BMY         # Bristol-Myers Squibb
 ABT         # Abbott Laboratories
 MDT         # Medtronic
+DXCM        # DexCom (position ouverte le 13/11)
 # Banques / finance
 BAC         # Bank of America
 WFC         # Wells Fargo
@@ -69,6 +70,7 @@ CVX         # Chevron
 COP         # ConocoPhillips
 SLB         # SLB (Schlumberger)
 # Défense / industrie / transport
+UAL         # United Airlines (alerte 110, R1 sur EMA20/50/200)
 RTX         # RTX
 HON         # Honeywell
 UPS         # United Parcel Service
@@ -100,6 +102,8 @@ NVDA        # NVIDIA
 SPY         # SPDR S&P 500 ETF
 QQQ         # Invesco QQQ Nasdaq 100
 
+# Logiciel
+ADSK        # Autodesk (R1 à revoir après résultats du 24/11)
 [INDICES]
 ^FCHI       # CAC 40
 FTSEMIB.MI  # FTSE MIB
