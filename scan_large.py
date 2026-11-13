@@ -60,7 +60,7 @@ PERIODE = "2y"              # historique téléchargé (EMA200 stabilisée)
 TAILLE_LOT = 80             # titres par appel groupé à yfinance
 PAUSE_LOT = 3               # secondes entre deux lots
 
-PRIX_MIN, PRIX_MAX = 5.0, 250.0
+PRIX_MIN, PRIX_MAX = 5.0, 400.0   # 400 $ : 2 actions pour un plafond de 800 $ par ligne
 VOLUME_MIN = 1_000_000      # titres/jour, moyenne 20 séances
 RECUL_MIN, RECUL_MAX = -35.0, -10.0   # % depuis le plus haut 52 semaines
 SEANCES_HISTORIQUE = 130
