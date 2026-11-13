@@ -61,6 +61,15 @@ ANNEES_TEST = 5             # fenêtre de test (les 2 dernières années à part
 ANNEES_RECENT = 2
 
 CAPITAL = 2000.0
+
+# Variantes de taille testées sur les règles v3.1 (famille « plan31@nom »)
+# capital, risque par trade, risque R3, plafond par ligne, plafonds de risque ouvert
+TAILLES = {
+    "A": (2000.0, 30.0, 15.0, 500.0, (120.0, 60.0)),   # cadre actuel
+    "B": (2287.0, 34.0, 17.0, 570.0, (137.0, 69.0)),   # capital mis à jour (1,5 %)
+    "C": (2000.0, 30.0, 15.0, 800.0, (120.0, 60.0)),   # plafond par ligne 800 $
+    "D": (2287.0, 34.0, 17.0, 800.0, (137.0, 69.0)),   # B + C
+}
 RISQUE, RISQUE_R3 = 30.0, 15.0
 PLAFOND_LIGNE = 500.0
 PLAFOND_RISQUE, PLAFOND_RISQUE_CORRECTION = 120.0, 60.0
@@ -373,7 +382,7 @@ def simuler(ticker: str, df: pd.DataFrame, famille: str, debut: int,
         declencheur = df["declencheur"].to_numpy()
         stops = df["stop_plan"].to_numpy()
         setups = df["setup"].to_numpy()
-    elif famille == "plan31":
+    elif famille.startswith("plan31"):
         signal = (df["setup31"] != "").to_numpy()
         declencheur = df["declencheur31"].to_numpy()
         stops = df["stop31"].to_numpy()
@@ -457,8 +466,12 @@ def simuler(ticker: str, df: pd.DataFrame, famille: str, debut: int,
                 compte["risque_trop_large"] += 1
                 i += 1
                 continue
-            budget = RISQUE_R3 if setup == "R3" else RISQUE
-            n_act = min(math.floor(budget / risque), math.floor(PLAFOND_LIGNE / trig))
+            if "@" in famille:
+                _, r_t, r3_t, plaf_t, _ = TAILLES[famille.split("@")[1]]
+            else:
+                r_t, r3_t, plaf_t = RISQUE, RISQUE_R3, PLAFOND_LIGNE
+            budget = r3_t if setup == "R3" else r_t
+            n_act = min(math.floor(budget / risque), math.floor(plaf_t / trig))
             if n_act < 2:
                 compte["trop_cher"] += 1
                 i += 1
@@ -558,7 +571,7 @@ def portefeuille(trades: pd.DataFrame, donnees: dict, regime: pd.Series,
                  secteurs: dict, debut: pd.Timestamp,
                  familles: tuple = ("plan",), v: str = "V1",
                  plafonds: tuple = (PLAFOND_RISQUE, PLAFOND_RISQUE_CORRECTION),
-                 setups_exclus: tuple = ()) -> tuple[pd.DataFrame, dict]:
+                 setups_exclus: tuple = (), capital: float = CAPITAL) -> tuple[pd.DataFrame, dict]:
     """Compte de 2 000 $ avec plafonds de risque, de secteur et de cash."""
     t = trades[trades["famille"].isin(familles) & ~trades["setup"].isin(setups_exclus)].copy()
     t["date_entree"] = pd.to_datetime(t["date_entree"])
@@ -571,7 +584,7 @@ def portefeuille(trades: pd.DataFrame, donnees: dict, regime: pd.Series,
 
     realise, ouvertes, journal = 0.0, [], []
     refus = {"risque": 0, "secteur": 0, "cash": 0, "deja_en_portefeuille": 0}
-    pic, dd_max = CAPITAL, 0.0
+    pic, dd_max = capital, 0.0
     retenus = 0
     for d in jours:
         restantes = []
@@ -600,7 +613,7 @@ def portefeuille(trades: pd.DataFrame, donnees: dict, regime: pd.Series,
             if sum(q["secteur"] == p["secteur"] for q in ouvertes) >= MAX_PAR_SECTEUR:
                 refus["secteur"] += 1
                 continue
-            if investi() + p["investi"] > CAPITAL + realise:
+            if investi() + p["investi"] > capital + realise:
                 refus["cash"] += 1
                 continue
             ouvertes.append(p.to_dict())
@@ -614,10 +627,10 @@ def portefeuille(trades: pd.DataFrame, donnees: dict, regime: pd.Series,
             vendu = p[f"n_t1_{v}"] if (pd.notna(p["d_t1"]) and p["d_t1"] <= d) else 0
             latent += (vendu * (p[f"prix_t1_{v}"] - p["entree"])
                        + (p["actions"] - vendu) * (c - p["entree"]))
-        valeur = CAPITAL + realise + latent
+        valeur = capital + realise + latent
         pic = max(pic, valeur)
         dd_max = min(dd_max, valeur / pic - 1)
-        journal.append({"date": d.date(), "valeur": round(valeur, 2),
+        journal.append({"date": d.date(), "valeur": round(valeur, 2), "investi": round(investi(), 2),
                         "positions": len(ouvertes), "risque_ouvert": round(risque_ouvert(), 2)})
 
     j = pd.DataFrame(journal)
@@ -626,8 +639,9 @@ def portefeuille(trades: pd.DataFrame, donnees: dict, regime: pd.Series,
         "trades_retenus": retenus,
         "trades_par_mois": round(retenus / max(len(jours) / 21, 1), 1),
         "refus": refus,
-        "valeur_finale": float(j["valeur"].iloc[-1]) if len(j) else CAPITAL,
-        "perf_pct": round((j["valeur"].iloc[-1] / CAPITAL - 1) * 100, 1) if len(j) else 0,
+        "valeur_finale": float(j["valeur"].iloc[-1]) if len(j) else capital,
+        "perf_pct": round((j["valeur"].iloc[-1] / capital - 1) * 100, 1) if len(j) else 0,
+        "investi_moyen": round(j["investi"].mean(), 0) if len(j) else 0,
         "drawdown_max_pct": round(dd_max * 100, 1),
         "positions_moy": round(j["positions"].mean(), 2) if len(j) else 0,
     }
@@ -696,8 +710,10 @@ def main():
         i0 = int(np.searchsorted(p.index.values, np.datetime64(debut)))
         i0 = max(i0, 252)
         reit = str(secteurs.get(t, "")).strip().lower() == "real estate"
-        for famille in ("plan", "plan31", "r2_large", "zone", "panique"):
-            if famille == "plan31" and reit:
+        familles = ("plan", "plan31", "r2_large", "zone", "panique") + tuple(
+            f"plan31@{k}" for k in TAILLES)
+        for famille in familles:
+            if famille.startswith("plan31") and reit:
                 continue
             tr, cpt = simuler(t, p, famille, i0, resultats.get(t))
             for tt in tr:
@@ -803,6 +819,21 @@ def main():
             md.append(f"| {nom} | {nom_p} | {rp['valeur_finale']:.0f} $ | {rp['perf_pct']:+.1f} % | "
                       f"{rp['drawdown_max_pct']} % | {rp['trades_par_mois']} | {rp['positions_moy']} | "
                       f"{rp['spy_perf_pct']:+.1f} % (dd {rp['spy_drawdown_max_pct']} %) |\n")
+
+    # ---- tailles de position (règles v3.1, sorties V1)
+    md.append("\n## Taille des positions (v3.1, sorties V1)\n")
+    md.append("| Variante | Capital | Risque/trade | Plafond ligne | Période | Valeur finale | Perf. | DD max | Trades/mois | Positions moy. | Investi moyen |\n")
+    md.append("|---|---|---|---|---|---|---|---|---|---|---|\n")
+    resume["tailles"] = {}
+    for k, (cap, r_t, r3_t, plaf_t, plafs) in TAILLES.items():
+        for nom_p, deb_p in ((f"{ANNEES_TEST} ans", debut), (f"{ANNEES_RECENT} ans", debut_recent)):
+            j, rp = portefeuille(trades[pd.to_datetime(trades["date_entree"]) >= deb_p],
+                                 donnees, regime, secteurs, deb_p, (f"plan31@{k}",), "V1",
+                                 plafs, (), cap)
+            resume["tailles"][f"{k} — {nom_p}"] = rp
+            md.append(f"| {k} | {cap:.0f} $ | {r_t:.0f} $ ({r3_t:.0f} $ R3) | {plaf_t:.0f} $ | {nom_p} | "
+                      f"{rp['valeur_finale']:.0f} $ | {rp['perf_pct']:+.1f} % | {rp['drawdown_max_pct']} % | "
+                      f"{rp['trades_par_mois']} | {rp['positions_moy']} | {rp['investi_moyen']:.0f} $ |\n")
 
     md.append("\n## Limites\n- Univers actuel des indices : biais du survivant, plutôt favorable.\n"
               "- Pas de filtre sur la cause de la baisse (fondamental) : en réel, une partie des pertes serait évitée, "
