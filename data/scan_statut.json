@@ -7,17 +7,17 @@
  "plafond_risque_usd": 60,
  "r3_autorise": true,
  "pistes": {
-  "R1": 35,
-  "R2": 4,
-  "R3": 92
+  "R1": 39,
+  "R2": 0,
+  "R3": 94
  },
- "genere_le": "2026-11-16T11:32:35+01:00",
- "derniere_seance": "2026-11-13",
+ "genere_le": "2026-11-17T00:55:08+01:00",
+ "derniere_seance": "2026-11-16",
  "nb_univers": 518,
  "nb_ok": 514,
- "nb_candidats": 164,
- "nb_candidats_resultats_connus": 164,
- "nb_candidats_resultats_proches": 14,
+ "nb_candidats": 168,
+ "nb_candidats_resultats_connus": 168,
+ "nb_candidats_resultats_proches": 12,
  "echecs": [
   "FDXF",
   "HONA",
