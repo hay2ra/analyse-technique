@@ -1,5 +1,5 @@
 {
- "genere_le": "2026-11-17T17:52:40+01:00",
+ "genere_le": "2026-11-17T22:22:53+01:00",
  "nb_ok": 93,
  "nb_echecs": 0,
  "echecs": [],
@@ -98,9 +98,7 @@
   "BZ=F": "2026-11-17",
   "BTC-EUR": "2026-11-17"
  },
- "signaux_achat": [
-  "COP"
- ],
+ "signaux_achat": [],
  "parametres": {
   "confirmation_rsi": true,
   "confirmation_macd": true,
