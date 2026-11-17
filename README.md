@@ -5,10 +5,12 @@ yfinance), calcule les indicateurs (pandas-ta) et enregistre les résultats dans
 le dossier `data/`. Les tâches planifiées Claude lisent ces fichiers.
 
 ## Horaires (heure de Paris)
-- Après la clôture européenne : vers 17h50
-- Après la clôture américaine : vers 22h20
+- Après la clôture européenne : 17h50 (sans le scan large)
+- Après la clôture américaine : 22h20 (avec le scan large S&P 500 + Nasdaq 100)
 
-GitHub peut décaler un lancement de quelques minutes à une demi-heure.
+Ces lancements viennent de deux tâches planifiées Claude (lundi au vendredi) qui
+déclenchent le workflow en mode `auto`. Les crons GitHub du workflow restent en
+secours, mais GitHub les retarde souvent de plusieurs heures.
 
 ## Fichiers produits (`data/`)
 | Fichier | Contenu |
@@ -22,7 +24,8 @@ GitHub peut décaler un lancement de quelques minutes à une demi-heure.
 Les sections `[PEA]`, `[WATCHLIST]`, `[CTO]`, `[INDICES]` servent à regrouper les titres.
 
 ## Lancer à la main
-Onglet **Actions** → **Analyse technique quotidienne** → **Run workflow**.
+Onglet **Actions** → **Analyse technique quotidienne** → **Run workflow**
+(mode `forcer` par défaut : tout est lancé, scan large compris, quelle que soit l'heure).
 
 ## Signal d'achat (pullback EMA20, achat uniquement)
 Tendance haussière (cours et EMA50 > EMA200) + plus bas récent au contact de l'EMA20
