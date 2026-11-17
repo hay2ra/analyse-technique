@@ -48,8 +48,8 @@
   {
    "ticker": "IWM",
    "nom": "Russell 2000",
-   "cloture": 268.98,
-   "var_jour_pct": -1.45,
+   "cloture": 269.05,
+   "var_jour_pct": -1.43,
    "perf_1s": -4.1,
    "perf_1m": -0.8,
    "perf_3m": -10.6,
@@ -58,7 +58,7 @@
    "au_dessus_ema50": false,
    "au_dessus_ema200": false,
    "ema20": 277.48,
-   "ema50": 280.55,
+   "ema50": 280.56,
    "ema200": 276.08,
    "rsi": 39.2,
    "rs_1m_vs_spy": 3.6,
@@ -67,19 +67,19 @@
   {
    "ticker": "^VIX",
    "nom": "VIX",
-   "cloture": 25.53,
-   "var_jour_pct": 11.44,
-   "perf_1s": 31.2,
-   "perf_1m": 38.4,
-   "perf_3m": 59.5,
-   "recul_pct": -27.7,
+   "cloture": 25.46,
+   "var_jour_pct": 11.13,
+   "perf_1s": 30.8,
+   "perf_1m": 38.1,
+   "perf_3m": 59.0,
+   "recul_pct": -27.9,
    "au_dessus_ema20": true,
    "au_dessus_ema50": true,
    "au_dessus_ema200": true,
    "ema20": 20.18,
-   "ema50": 18.46,
+   "ema50": 18.45,
    "ema200": 17.8,
-   "rsi": 60.8
+   "rsi": 60.7
   },
   {
    "ticker": "XLK",
@@ -198,11 +198,11 @@
   {
    "ticker": "XLF",
    "nom": "Finance",
-   "cloture": 57.08,
-   "var_jour_pct": -1.89,
+   "cloture": 57.07,
+   "var_jour_pct": -1.91,
    "perf_1s": -2.1,
    "perf_1m": 3.7,
-   "perf_3m": -0.3,
+   "perf_3m": -0.4,
    "recul_pct": -4.9,
    "au_dessus_ema20": false,
    "au_dessus_ema50": true,
@@ -210,7 +210,7 @@
    "ema20": 57.3,
    "ema50": 56.52,
    "ema200": 54.57,
-   "rsi": 50.4,
+   "rsi": 50.3,
    "rs_1m_vs_spy": 8.1,
    "rs_3m_vs_spy": 4.2
   },
@@ -310,5 +310,5 @@
    "rs_3m_vs_spy": 2.2
   }
  ],
- "genere_le": "2026-11-17T22:26:36+01:00"
+ "genere_le": "2026-11-18T00:14:50+01:00"
 }
