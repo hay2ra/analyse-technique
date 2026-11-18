@@ -1,5 +1,5 @@
 {
- "genere_le": "2026-11-18T17:52:14+01:00",
+ "genere_le": "2026-11-18T22:22:21+01:00",
  "nb_ok": 93,
  "nb_echecs": 0,
  "echecs": [],
@@ -98,7 +98,10 @@
   "BZ=F": "2026-11-18",
   "BTC-EUR": "2026-11-18"
  },
- "signaux_achat": [],
+ "signaux_achat": [
+  "AMZN",
+  "DXCM"
+ ],
  "parametres": {
   "confirmation_rsi": true,
   "confirmation_macd": true,
