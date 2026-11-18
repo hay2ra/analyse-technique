@@ -48,8 +48,8 @@
   {
    "ticker": "IWM",
    "nom": "Russell 2000",
-   "cloture": 270.11,
-   "var_jour_pct": 0.39,
+   "cloture": 270.12,
+   "var_jour_pct": 0.4,
    "perf_1s": -4.6,
    "perf_1m": -2.1,
    "perf_3m": -9.0,
@@ -67,25 +67,25 @@
   {
    "ticker": "^VIX",
    "nom": "VIX",
-   "cloture": 24.51,
-   "var_jour_pct": -3.73,
-   "perf_1s": 40.1,
-   "perf_1m": 41.6,
-   "perf_3m": 62.0,
-   "recul_pct": -30.6,
+   "cloture": 24.56,
+   "var_jour_pct": -3.53,
+   "perf_1s": 40.4,
+   "perf_1m": 41.9,
+   "perf_3m": 62.3,
+   "recul_pct": -30.4,
    "au_dessus_ema20": true,
    "au_dessus_ema50": true,
    "au_dessus_ema200": true,
    "ema20": 20.59,
    "ema50": 18.69,
    "ema200": 17.86,
-   "rsi": 58.7
+   "rsi": 58.8
   },
   {
    "ticker": "XLK",
    "nom": "Technologie",
-   "cloture": 163.79,
-   "var_jour_pct": 0.32,
+   "cloture": 163.81,
+   "var_jour_pct": 0.34,
    "perf_1s": -6.1,
    "perf_1m": -11.7,
    "perf_3m": -10.4,
@@ -96,7 +96,7 @@
    "ema20": 174.06,
    "ema50": 180.81,
    "ema200": 172.37,
-   "rsi": 34.8,
+   "rsi": 34.9,
    "rs_1m_vs_spy": -6.6,
    "rs_3m_vs_spy": -6.4
   },
@@ -179,17 +179,17 @@
   {
    "ticker": "XLV",
    "nom": "Santé",
-   "cloture": 181.15,
-   "var_jour_pct": -2.21,
+   "cloture": 181.17,
+   "var_jour_pct": -2.2,
    "perf_1s": -4.1,
-   "perf_1m": 0.7,
+   "perf_1m": 0.8,
    "perf_3m": 5.5,
    "recul_pct": -5.8,
    "au_dessus_ema20": false,
    "au_dessus_ema50": true,
    "au_dessus_ema200": true,
    "ema20": 183.88,
-   "ema50": 178.06,
+   "ema50": 178.07,
    "ema200": 163.27,
    "rsi": 47.5,
    "rs_1m_vs_spy": 5.8,
@@ -274,8 +274,8 @@
   {
    "ticker": "XLU",
    "nom": "Services aux collectivités",
-   "cloture": 43.54,
-   "var_jour_pct": 0.28,
+   "cloture": 43.55,
+   "var_jour_pct": 0.3,
    "perf_1s": -0.6,
    "perf_1m": 4.0,
    "perf_3m": 0.2,
@@ -286,7 +286,7 @@
    "ema20": 43.25,
    "ema50": 42.71,
    "ema200": 43.01,
-   "rsi": 56.9,
+   "rsi": 57.1,
    "rs_1m_vs_spy": 9.0,
    "rs_3m_vs_spy": 4.2
   },
@@ -310,5 +310,5 @@
    "rs_3m_vs_spy": 1.6
   }
  ],
- "genere_le": "2026-11-18T22:25:58+01:00"
+ "genere_le": "2026-11-18T23:46:46+01:00"
 }
