@@ -98,12 +98,13 @@ SHOP        # Shopify
 DDOG        # Datadog
 # IA (1 seule, moteur déjà chargé en général)
 NVDA        # NVIDIA
+AVGO        # Broadcom
 # Contexte de marché
 SPY         # SPDR S&P 500 ETF
 QQQ         # Invesco QQQ Nasdaq 100
-
 # Logiciel
 ADSK        # Autodesk (R1 à revoir après résultats du 24/11)
+
 [INDICES]
 ^FCHI       # CAC 40
 FTSEMIB.MI  # FTSE MIB
