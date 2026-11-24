@@ -2,29 +2,29 @@
  "largeur_sp500": {
   "nb_titres": 500,
   "pct_au_dessus_ema20": 38.2,
-  "pct_au_dessus_ema50": 47.8,
-  "pct_au_dessus_ema200": 55.4,
+  "pct_au_dessus_ema50": 48.0,
+  "pct_au_dessus_ema200": 55.6,
   "pct_proches_plus_haut_52s": 1.4,
   "pct_recul_plus_20": 38.0,
-  "pct_hausse_du_jour": 83.4
+  "pct_hausse_du_jour": 83.2
  },
  "indices_et_secteurs": [
   {
    "ticker": "SPY",
    "nom": "S&P 500",
-   "cloture": 722.51,
-   "var_jour_pct": 4.74,
+   "cloture": 722.29,
+   "var_jour_pct": 4.71,
    "perf_1s": -2.4,
-   "perf_1m": -4.9,
-   "perf_3m": -5.4,
+   "perf_1m": -5.0,
+   "perf_3m": -5.5,
    "recul_pct": -7.6,
    "au_dessus_ema20": false,
    "au_dessus_ema50": false,
    "au_dessus_ema200": false,
-   "ema20": 740.7,
-   "ema50": 752.35,
+   "ema20": 740.68,
+   "ema50": 752.34,
    "ema200": 731.76,
-   "rsi": 41.6
+   "rsi": 41.5
   },
   {
    "ticker": "QQQ",
@@ -43,7 +43,7 @@
    "ema200": 681.48,
    "rsi": 42.2,
    "rs_1m_vs_spy": -2.6,
-   "rs_3m_vs_spy": -2.9
+   "rs_3m_vs_spy": -2.8
   },
   {
    "ticker": "IWM",
@@ -117,7 +117,7 @@
    "ema200": 512.14,
    "rsi": 42.5,
    "rs_1m_vs_spy": -7.8,
-   "rs_3m_vs_spy": -11.8
+   "rs_3m_vs_spy": -11.7
   },
   {
    "ticker": "XLC",
@@ -173,7 +173,7 @@
    "ema50": 87.85,
    "ema200": 84.2,
    "rsi": 54.4,
-   "rs_1m_vs_spy": 7.3,
+   "rs_1m_vs_spy": 7.4,
    "rs_3m_vs_spy": 10.6
   },
   {
@@ -230,8 +230,8 @@
    "ema50": 168.27,
    "ema200": 169.18,
    "rsi": 43.7,
-   "rs_1m_vs_spy": 3.6,
-   "rs_3m_vs_spy": -3.3
+   "rs_1m_vs_spy": 3.7,
+   "rs_3m_vs_spy": -3.2
   },
   {
    "ticker": "XLE",
@@ -310,5 +310,5 @@
    "rs_3m_vs_spy": 0.8
   }
  ],
- "genere_le": "2026-11-23T22:26:44+01:00"
+ "genere_le": "2026-11-24T03:40:55+01:00"
 }
