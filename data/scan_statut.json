@@ -8,15 +8,15 @@
  "r3_autorise": true,
  "pistes": {
   "R1": 41,
-  "R2": 20,
-  "R3": 128
+  "R2": 25,
+  "R3": 124
  },
- "genere_le": "2026-11-24T14:32:06+01:00",
- "derniere_seance": "2026-11-23",
+ "genere_le": "2026-11-24T22:25:40+01:00",
+ "derniere_seance": "2026-11-24",
  "nb_univers": 518,
  "nb_ok": 514,
- "nb_candidats": 215,
- "nb_candidats_resultats_connus": 215,
+ "nb_candidats": 195,
+ "nb_candidats_resultats_connus": 195,
  "nb_candidats_resultats_proches": 8,
  "echecs": [
   "FDXF",

@@ -1,5 +1,5 @@
 {
- "genere_le": "2026-11-24T17:52:45+01:00",
+ "genere_le": "2026-11-24T22:22:25+01:00",
  "nb_ok": 93,
  "nb_echecs": 0,
  "echecs": [],
@@ -101,9 +101,11 @@
  "signaux_achat": [
   "V",
   "BMY",
-  "ABT",
   "DXCM",
   "RTX",
+  "UPS",
+  "KO",
+  "SBUX",
   "ADSK"
  ],
  "parametres": {
