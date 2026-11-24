@@ -1,12 +1,12 @@
 {
  "largeur_sp500": {
   "nb_titres": 500,
-  "pct_au_dessus_ema20": 38.2,
+  "pct_au_dessus_ema20": 38.4,
   "pct_au_dessus_ema50": 48.0,
   "pct_au_dessus_ema200": 55.6,
   "pct_proches_plus_haut_52s": 1.4,
   "pct_recul_plus_20": 38.0,
-  "pct_hausse_du_jour": 83.2
+  "pct_hausse_du_jour": 83.4
  },
  "indices_et_secteurs": [
   {
@@ -310,5 +310,5 @@
    "rs_3m_vs_spy": 0.8
   }
  ],
- "genere_le": "2026-11-24T03:40:55+01:00"
+ "genere_le": "2026-11-24T04:08:44+01:00"
 }
