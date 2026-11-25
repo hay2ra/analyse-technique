@@ -48,8 +48,8 @@
   {
    "ticker": "IWM",
    "nom": "Russell 2000",
-   "cloture": 268.85,
-   "var_jour_pct": 0.64,
+   "cloture": 268.87,
+   "var_jour_pct": 0.65,
    "perf_1s": -0.5,
    "perf_1m": -4.0,
    "perf_3m": -10.1,
@@ -67,29 +67,29 @@
   {
    "ticker": "^VIX",
    "nom": "VIX",
-   "cloture": 28.1,
-   "var_jour_pct": 6.6,
-   "perf_1s": 14.4,
-   "perf_1m": 60.4,
-   "perf_3m": 94.7,
-   "recul_pct": -29.8,
+   "cloture": 28.29,
+   "var_jour_pct": 7.32,
+   "perf_1s": 15.2,
+   "perf_1m": 61.5,
+   "perf_3m": 96.0,
+   "recul_pct": -29.3,
    "au_dessus_ema20": true,
    "au_dessus_ema50": true,
    "au_dessus_ema200": true,
-   "ema20": 23.86,
-   "ema50": 20.56,
-   "ema200": 18.4,
-   "rsi": 57.5
+   "ema20": 23.87,
+   "ema50": 20.57,
+   "ema200": 18.41,
+   "rsi": 57.8
   },
   {
    "ticker": "XLK",
    "nom": "Technologie",
-   "cloture": 155.82,
-   "var_jour_pct": -0.81,
+   "cloture": 155.79,
+   "var_jour_pct": -0.83,
    "perf_1s": -4.9,
    "perf_1m": -17.8,
    "perf_3m": -17.3,
-   "recul_pct": -23.3,
+   "recul_pct": -23.4,
    "au_dessus_ema20": false,
    "au_dessus_ema50": false,
    "au_dessus_ema200": false,
@@ -198,9 +198,9 @@
   {
    "ticker": "XLF",
    "nom": "Finance",
-   "cloture": 56.5,
-   "var_jour_pct": 0.7,
-   "perf_1s": 0.1,
+   "cloture": 56.51,
+   "var_jour_pct": 0.71,
+   "perf_1s": 0.2,
    "perf_1m": 1.1,
    "perf_3m": -2.0,
    "recul_pct": -5.9,
@@ -209,7 +209,7 @@
    "au_dessus_ema200": true,
    "ema20": 56.64,
    "ema50": 56.37,
-   "ema200": 54.64,
+   "ema200": 54.65,
    "rsi": 49.5,
    "rs_1m_vs_spy": 8.0,
    "rs_3m_vs_spy": 4.8
@@ -236,9 +236,9 @@
   {
    "ticker": "XLE",
    "nom": "Énergie",
-   "cloture": 60.88,
-   "var_jour_pct": 0.71,
-   "perf_1s": -0.7,
+   "cloture": 60.9,
+   "var_jour_pct": 0.74,
+   "perf_1s": -0.6,
    "perf_1m": -10.7,
    "perf_3m": -1.7,
    "recul_pct": -13.2,
@@ -248,15 +248,15 @@
    "ema20": 62.87,
    "ema50": 63.6,
    "ema200": 58.88,
-   "rsi": 38.5,
-   "rs_1m_vs_spy": -3.9,
-   "rs_3m_vs_spy": 5.1
+   "rsi": 38.6,
+   "rs_1m_vs_spy": -3.8,
+   "rs_3m_vs_spy": 5.2
   },
   {
    "ticker": "XLB",
    "nom": "Matériaux",
-   "cloture": 51.2,
-   "var_jour_pct": 2.05,
+   "cloture": 51.21,
+   "var_jour_pct": 2.07,
    "perf_1s": 1.5,
    "perf_1m": -1.1,
    "perf_3m": -3.4,
@@ -267,7 +267,7 @@
    "ema20": 51.06,
    "ema50": 51.14,
    "ema200": 50.18,
-   "rsi": 50.4,
+   "rsi": 50.5,
    "rs_1m_vs_spy": 5.8,
    "rs_3m_vs_spy": 3.5
   },
@@ -310,5 +310,5 @@
    "rs_3m_vs_spy": 5.9
   }
  ],
- "genere_le": "2026-11-25T22:26:39+01:00"
+ "genere_le": "2026-11-26T00:52:25+01:00"
 }
