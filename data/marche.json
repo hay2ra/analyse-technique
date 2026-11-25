@@ -67,19 +67,19 @@
   {
    "ticker": "^VIX",
    "nom": "VIX",
-   "cloture": 26.36,
-   "var_jour_pct": -0.98,
-   "perf_1s": 3.5,
-   "perf_1m": 43.3,
-   "perf_3m": 81.7,
-   "recul_pct": -34.1,
+   "cloture": 30.52,
+   "var_jour_pct": 15.78,
+   "perf_1s": 24.3,
+   "perf_1m": 74.2,
+   "perf_3m": 111.5,
+   "recul_pct": -23.8,
    "au_dessus_ema20": true,
    "au_dessus_ema50": true,
    "au_dessus_ema200": true,
-   "ema20": 23.41,
-   "ema50": 20.25,
-   "ema200": 18.31,
-   "rsi": 55.5
+   "ema20": 24.09,
+   "ema50": 20.66,
+   "ema200": 18.43,
+   "rsi": 60.1
   },
   {
    "ticker": "XLK",
@@ -310,5 +310,5 @@
    "rs_3m_vs_spy": 3.1
   }
  ],
- "genere_le": "2026-11-25T05:21:38+01:00"
+ "genere_le": "2026-11-25T13:56:36+01:00"
 }
