@@ -12,19 +12,19 @@
   {
    "ticker": "SPY",
    "nom": "S&P 500",
-   "cloture": 718.58,
-   "var_jour_pct": -0.51,
+   "cloture": 718.78,
+   "var_jour_pct": -0.49,
    "perf_1s": -1.9,
    "perf_1m": -6.1,
-   "perf_3m": -6.0,
-   "recul_pct": -8.1,
+   "perf_3m": -5.9,
+   "recul_pct": -8.0,
    "au_dessus_ema20": false,
    "au_dessus_ema50": false,
    "au_dessus_ema200": false,
-   "ema20": 738.57,
-   "ema50": 751.01,
+   "ema20": 738.59,
+   "ema50": 751.02,
    "ema200": 731.63,
-   "rsi": 40.4
+   "rsi": 40.5
   },
   {
    "ticker": "QQQ",
@@ -43,7 +43,7 @@
    "ema200": 681.05,
    "rsi": 39.5,
    "rs_1m_vs_spy": -4.3,
-   "rs_3m_vs_spy": -4.2
+   "rs_3m_vs_spy": -4.3
   },
   {
    "ticker": "IWM",
@@ -61,18 +61,18 @@
    "ema50": 277.69,
    "ema200": 275.62,
    "rsi": 43.1,
-   "rs_1m_vs_spy": 2.6,
-   "rs_3m_vs_spy": -4.4
+   "rs_1m_vs_spy": 2.5,
+   "rs_3m_vs_spy": -4.5
   },
   {
    "ticker": "^VIX",
    "nom": "VIX",
-   "cloture": 26.35,
-   "var_jour_pct": -1.01,
+   "cloture": 26.36,
+   "var_jour_pct": -0.98,
    "perf_1s": 3.5,
    "perf_1m": 43.3,
-   "perf_3m": 81.6,
-   "recul_pct": -34.2,
+   "perf_3m": 81.7,
+   "recul_pct": -34.1,
    "au_dessus_ema20": true,
    "au_dessus_ema50": true,
    "au_dessus_ema200": true,
@@ -117,7 +117,7 @@
    "ema200": 511.29,
    "rsi": 37.5,
    "rs_1m_vs_spy": -15.1,
-   "rs_3m_vs_spy": -17.2
+   "rs_3m_vs_spy": -17.3
   },
   {
    "ticker": "XLC",
@@ -155,7 +155,7 @@
    "ema200": 115.13,
    "rsi": 52.0,
    "rs_1m_vs_spy": 9.1,
-   "rs_3m_vs_spy": 6.7
+   "rs_3m_vs_spy": 6.6
   },
   {
    "ticker": "XLP",
@@ -173,18 +173,18 @@
    "ema50": 88.0,
    "ema200": 84.28,
    "rsi": 60.0,
-   "rs_1m_vs_spy": 10.6,
-   "rs_3m_vs_spy": 13.2
+   "rs_1m_vs_spy": 10.5,
+   "rs_3m_vs_spy": 13.1
   },
   {
    "ticker": "XLV",
    "nom": "Santé",
-   "cloture": 184.74,
-   "var_jour_pct": 2.97,
+   "cloture": 184.72,
+   "var_jour_pct": 2.95,
    "perf_1s": -0.3,
    "perf_1m": 3.0,
-   "perf_3m": 6.9,
-   "recul_pct": -3.9,
+   "perf_3m": 6.8,
+   "recul_pct": -4.0,
    "au_dessus_ema20": true,
    "au_dessus_ema50": true,
    "au_dessus_ema200": true,
@@ -192,7 +192,7 @@
    "ema50": 178.33,
    "ema200": 163.94,
    "rsi": 55.5,
-   "rs_1m_vs_spy": 9.2,
+   "rs_1m_vs_spy": 9.1,
    "rs_3m_vs_spy": 12.8
   },
   {
@@ -211,7 +211,7 @@
    "ema50": 56.36,
    "ema200": 54.63,
    "rsi": 47.2,
-   "rs_1m_vs_spy": 6.3,
+   "rs_1m_vs_spy": 6.2,
    "rs_3m_vs_spy": 2.6
   },
   {
@@ -236,19 +236,19 @@
   {
    "ticker": "XLE",
    "nom": "Énergie",
-   "cloture": 60.43,
-   "var_jour_pct": 0.94,
+   "cloture": 60.45,
+   "var_jour_pct": 0.97,
    "perf_1s": -4.6,
    "perf_1m": -13.2,
    "perf_3m": -2.6,
-   "recul_pct": -13.9,
+   "recul_pct": -13.8,
    "au_dessus_ema20": false,
    "au_dessus_ema50": false,
    "au_dessus_ema200": true,
-   "ema20": 63.07,
+   "ema20": 63.08,
    "ema50": 63.71,
    "ema200": 58.86,
-   "rsi": 36.0,
+   "rsi": 36.1,
    "rs_1m_vs_spy": -7.1,
    "rs_3m_vs_spy": 3.3
   },
@@ -268,7 +268,7 @@
    "ema50": 51.14,
    "ema200": 50.17,
    "rsi": 44.2,
-   "rs_1m_vs_spy": 3.8,
+   "rs_1m_vs_spy": 3.7,
    "rs_3m_vs_spy": -0.1
   },
   {
@@ -306,9 +306,9 @@
    "ema50": 43.16,
    "ema200": 42.75,
    "rsi": 51.4,
-   "rs_1m_vs_spy": 7.7,
-   "rs_3m_vs_spy": 3.2
+   "rs_1m_vs_spy": 7.6,
+   "rs_3m_vs_spy": 3.1
   }
  ],
- "genere_le": "2026-11-24T22:25:40+01:00"
+ "genere_le": "2026-11-25T01:12:28+01:00"
 }
