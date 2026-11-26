@@ -6,7 +6,7 @@
   "pct_au_dessus_ema200": 60.2,
   "pct_proches_plus_haut_52s": 9.2,
   "pct_recul_plus_20": 36.4,
-  "pct_hausse_du_jour": 73.4
+  "pct_hausse_du_jour": 73.6
  },
  "indices_et_secteurs": [
   {
@@ -310,5 +310,5 @@
    "rs_3m_vs_spy": 5.9
   }
  ],
- "genere_le": "2026-11-26T01:47:03+01:00"
+ "genere_le": "2026-11-26T03:56:39+01:00"
 }
