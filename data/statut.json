@@ -1,5 +1,5 @@
 {
- "genere_le": "2026-11-27T17:52:45+01:00",
+ "genere_le": "2026-11-27T22:22:13+01:00",
  "nb_ok": 93,
  "nb_echecs": 0,
  "echecs": [],
@@ -103,16 +103,15 @@
   "CS.PA",
   "BNP.PA",
   "UCG.MI",
+  "ABT",
   "DXCM",
   "PYPL",
-  "CVX",
   "SLB",
   "RTX",
   "CSX",
   "SBUX",
   "FTNT",
   "QCOM",
-  "ADSK",
   "^STOXX"
  ],
  "parametres": {
